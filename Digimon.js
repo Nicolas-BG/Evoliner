@@ -7,6 +7,12 @@ export default class Digimon {
     #evolucoes = [];
     #pre_evolucoes = [];
     static instancias = [];
+    static instancias_lv1 = [];
+    static instancias_lv2 = [];
+    static instancias_lv3 = [];
+    static instancias_lv4 = [];
+    static instancias_lv5 = [];
+    static instancias_lv6 = [];
 
 
     //setar construtor
@@ -44,6 +50,26 @@ export default class Digimon {
         this.#nome = nome;
         this.#nivel = nivel;
         Digimon.instancias.push(this);
+        switch (this.#nivel) {
+            case "Baby 1":
+                Digimon.instancias_lv1.push(this);
+                break;
+            case "Baby 2":
+                Digimon.instancias_lv2.push(this);
+                break;
+            case "Child":
+                Digimon.instancias_lv3.push(this);
+                break;
+            case "Adult":
+                Digimon.instancias_lv4.push(this);
+                break;
+            case "Perfect":
+                Digimon.instancias_lv5.push(this);
+                break;
+            case "Ultimate":
+                Digimon.instancias_lv6.push(this);
+                break;
+        }
     }
 
     //Nome
@@ -55,16 +81,103 @@ export default class Digimon {
         this.#nome = nome;
     }
 
-    //Nvel
+    //Nível
 
-    getNivel(){
+    getNivel() {
         return this.#nivel;
     }
     setNivel(nivel) {
+        if (typeof nivel === 'number') {
+            if (nivel < 1 || nivel > 6) {
+                throw new Error("Nível inválido");
+            }
+            switch (nivel) {
+                case 1:
+                    nivel = "Baby 1";
+                    break;
+                case 2:
+                    nivel = "Baby 2";
+                    break;
+                case 3:
+                    nivel = "Child";
+                    break;
+                case 4:
+                    nivel = "Adult";
+                    break;
+                case 5:
+                    nivel = "Perfect";
+                    break;
+                case 6:
+                    nivel = "Ultimate";
+                    break;
+            }
+        } else {
+            if (nivel !== "Baby 1" && nivel !== "Baby 2" && nivel !== "Child" && nivel !== "Adult" && nivel !== "Perfect" && nivel !== "Ultimate") {
+                throw new Error("Nível inválido");
+            }
+        }        
         if (nivel !== "Baby 1" && nivel !== "Baby 2" && nivel !== "Child" && nivel !== "Adult" && nivel !== "Perfect" && nivel !== "Ultimate") {
             throw new Error("Nível inválido");
         }
+        switch (this.#nivel) {
+            case "Baby 1":
+                const index1 = Digimon.instancias_lv1.indexOf(this);
+                if (index1 > -1) { // only splice array when item is found
+                    Digimon.instancias_lv1.splice(index1, 1); // 2nd parameter means remove one item only
+                }
+                break;
+            case "Baby 2":
+                const index2 = Digimon.instancias_lv2.indexOf(this);
+                if (index2 > -1) { // only splice array when item is found
+                    Digimon.instancias_lv2.splice(index2, 1); // 2nd parameter means remove one item only
+                }
+                break;
+            case "Child":
+                const index3 = Digimon.instancias_lv3.indexOf(this);
+                if (index3 > -1) { // only splice array when item is found
+                    Digimon.instancias_lv3.splice(index3, 1); // 2nd parameter means remove one item only
+                }
+                break;
+            case "Adult":
+                const index4 = Digimon.instancias_lv4.indexOf(this);
+                if (index4 > -1) { // only splice array when item is found
+                    Digimon.instancias_lv4.splice(index4, 1); // 2nd parameter means remove one item only
+                }
+                break;
+            case "Perfect":
+                const index5 = Digimon.instancias_lv5.indexOf(this);
+                if (index5 > -1) { // only splice array when item is found
+                    Digimon.instancias_lv5.splice(index5, 1); // 2nd parameter means remove one item only
+                }
+                break;
+            case "Ultimate":
+                const index6 = Digimon.instancias_lv6.indexOf(this);
+                if (index6 > -1) { // only splice array when item is found
+                    Digimon.instancias_lv6.splice(index6, 1); // 2nd parameter means remove one item only
+                }
+                break;
+        }
         this.#nivel = nivel;
+        switch (this.#nivel) {
+            case "Baby 1":
+                Digimon.instancias_lv1.push(this);
+                break;
+            case "Baby 2":
+                Digimon.instancias_lv2.push(this);
+                break;
+            case "Child":
+                Digimon.instancias_lv3.push(this);
+                break;
+            case "Adult":
+                Digimon.instancias_lv4.push(this);
+                break;
+            case "Perfect":
+                Digimon.instancias_lv5.push(this);
+                break;
+            case "Ultimate":
+                Digimon.instancias_lv6.push(this);
+                break;
+        }
     }
 
     //Imagem
@@ -111,12 +224,12 @@ export default class Digimon {
         }
     }
 
-    resetEvolucoes(){
+    resetEvolucoes() {
         this.#evolucoes = [];
     }
 
     getLaterEvolucoes() {
-        const evolucoes = this.#getEvolucoesIntern(); 
+        const evolucoes = this.#getEvolucoesIntern();
         let laterEvolucoes = [];
         if (evolucoes.length === 0) {
             return laterEvolucoes;
@@ -127,14 +240,14 @@ export default class Digimon {
             if (evolucoes[i].#getEvolucoesIntern().length > 0) {
                 laterEvolucoes.push(...evolucoes[i].getLaterEvolucoes());
             }
-        }        
+        }
 
         return laterEvolucoes;
     }
 
     //Pré-Evoluções
 
-    getPreEvolucoes(){
+    getPreEvolucoes() {
         return this.#pre_evolucoes.map(pre_evolucao => pre_evolucao.getNome());
     }
 
@@ -165,12 +278,12 @@ export default class Digimon {
         }
     }
 
-    resetPreEvolucoes(){
+    resetPreEvolucoes() {
         this.#pre_evolucoes = [];
     }
- ///////
+    ///////
     getLaterPreEvolucoes() {
-        const pre_evolucoes = this.#getPreEvolucoesIntern(); 
+        const pre_evolucoes = this.#getPreEvolucoesIntern();
         let laterPreEvolucoes = [];
         if (pre_evolucoes.length === 0) {
             return laterPreEvolucoes;
@@ -181,7 +294,7 @@ export default class Digimon {
             if (pre_evolucoes[i].#getPreEvolucoesIntern().length > 0) {
                 laterPreEvolucoes.push(...pre_evolucoes[i].getLaterPreEvolucoes());
             }
-        }        
+        }
 
         return laterPreEvolucoes;
     }
