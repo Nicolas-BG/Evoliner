@@ -8,7 +8,8 @@
     border: 1px solid #ccc;
     width: 620px;
     height: 220px;
-    margin: 10px;    
+    margin: 10px;   
+    /*color: rgba(0, 0, 0, 1);*/
 }
 
 .nome {   
@@ -33,6 +34,7 @@
     img {
         width: 130px;
         height: 130px;
+        /*opacity: 1 !important;*/
     }
 }
 
@@ -61,6 +63,10 @@
     display: flex;
 }
 .level_template{
+    /*color: rgba(0, 0, 0, 0.5);
+    img{
+        opacity: 0.5;
+    }
     /*border: 1px solid #ccc; */
     display: block;    
     min-width: 642px;
@@ -69,4 +75,33 @@
     height: 100%;
     margin: 5px;
     margin-right: 50px;
+}
+
+
+/* */
+
+.setas{
+    position: absolute;
+    top:0px ;
+    left:0px;
+    z-index: 9999;
+}
+
+seta {
+  /*left: 2734px; */ /*2114px + 620px*/
+  /*top:448px; */ /*338 + 110 */
+  /*transform: rotate(45deg);*/
+  transform-origin: 0 0;
+  height: 5px;
+  position: absolute;     
+  
+  
+}/* A ponta da seta */
+seta:after {    
+position: absolute;   
+  content: "";
+  right: -20px;
+  top: -11px;
+  border: 15px solid transparent;
+  border-left-color: grey;
 }

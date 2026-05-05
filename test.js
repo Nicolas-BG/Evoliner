@@ -1,6 +1,9 @@
 import Digimon from "./Digimon.js";
 
 function main() {
+
+    window.scrollTo(0, 0);
+
     const botamon = new Digimon("Botamon", 1);
     const koromon = new Digimon("Koromon", 2);
     const agumon = new Digimon("Agumon", 3);
@@ -32,8 +35,8 @@ function main() {
     dinomon.setImagem("https://static.wikia.nocookie.net/digimonat/images/c/c2/Dinomon_b.jpg/revision/latest?cb=20240808155030&path-prefix=pt");
     mugendramon.setImagem("https://static.wikia.nocookie.net/digimonat/images/e/ef/Mugendramon_b.jpg/revision/latest/scale-to-width-down/1000?cb=20230512041515&path-prefix=pt");
 
-    wargreymon.addPreEvolucao(metalgreymon_vaccine);
-    blitzgreymon.addPreEvolucao(metalgreymon_virus);
+    wargreymon.addMultiPreEvolucao([metalgreymon_vaccine, mastertyranomon]);
+    blitzgreymon.addMultiPreEvolucao([metalgreymon_virus, metalgreymon_vaccine]);
     rusttyranomon.addPreEvolucao(metaltyranomon);
     dinomon.addPreEvolucao(mastertyranomon);
     mugendramon.addMultiPreEvolucao([metalgreymon_virus, metaltyranomon]);
@@ -47,15 +50,6 @@ function main() {
     koromon.addPreEvolucao(botamon);
     
 
-    console.log(Digimon.instancias.map(d => d.getNome()));
-    console.log(Digimon.instancias_lv1.map(d => d.getNome()));
-    console.log(Digimon.instancias_lv2.map(d => d.getNome()));
-    console.log(Digimon.instancias_lv3.map(d => d.getNome()));
-    console.log(Digimon.instancias_lv4.map(d => d.getNome()));
-    console.log(Digimon.instancias_lv5.map(d => d.getNome()));
-    console.log(Digimon.instancias_lv6.map(d => d.getNome()));
-
-    console.log("")
 
     exibirDigimons(Digimon.instancias_lv1, "lv1");
     exibirDigimons(Digimon.instancias_lv2, "lv2");
@@ -64,6 +58,8 @@ function main() {
     exibirDigimons(Digimon.instancias_lv5, "lv5");
     exibirDigimons(Digimon.instancias_lv6, "lv6");
 
+    criarSetasTodos();
+
 }
 
 main();
@@ -71,7 +67,9 @@ main();
 function exibirDigimons(instancias, id) {
     for (let index = 0; index < instancias.length; index++) {
         let digi = instancias[index];
-        let mensagem = `<div class="digimon_template" id="digimon_${digi.getNome()}">
+        let nome_formatado = "digimon_" + digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+
+        let mensagem = `<div class="digimon_template" id="${nome_formatado}">
             <div class="evos">
                 <div class="evos_content">Pre-Evolucoes:<br>${digi.getPreEvolucoes().length > 0 ? digi.getPreEvolucoes().join(";<br>") : "Nenhuma"}</div>
             </div>
@@ -86,19 +84,100 @@ function exibirDigimons(instancias, id) {
                 <div class="evos_content">Evolucoes:<br>${digi.getEvolucoes().length > 0 ? digi.getEvolucoes().join(";<br>") : "Nenhuma"}</div>
             </div>
         </div>`
-        //let mensagem = `<div class="digimon_template" id="digimon_${digi.getNome()}">
-        //    ${digi.getNome()} 
-        //    <img src="${digi.getImagem()}" alt="${digi.getNome()}"> <br>
-        //    nivel: ${digi.getNivel()} <br>
-        //    pré-evoluções: ${digi.getPreEvolucoes().length > 0 ? digi.getPreEvolucoes().join(", ") : "Nenhuma"} <br>
-        //    evoluções: ${digi.getEvolucoes().length > 0 ? digi.getEvolucoes().join(", ") : "Nenhuma"} <br>
-        //</div>`;
         if (index !== instancias.length - 1) {
             mensagem += `
             <div class="separador"><div>`;
         }
-        console.log(mensagem);
+
+        
         document.getElementById(id).innerHTML += mensagem;
 
+        const elemento = document.querySelector(`#${nome_formatado}`);
+        //console.log(digi.getNome());
+        const coordenadas = elemento.getBoundingClientRect();
+        //console.log(`X: ${coordenadas.left}, Y: ${coordenadas.top}`);
+
     }
+}
+
+function criarSetasTodos() {
+    criarSetas(Digimon.instancias_lv1, Digimon.instancias_lv2);
+    criarSetas(Digimon.instancias_lv2, Digimon.instancias_lv3);
+    criarSetas(Digimon.instancias_lv3, Digimon.instancias_lv4);
+    criarSetas(Digimon.instancias_lv4, Digimon.instancias_lv5);
+    criarSetas(Digimon.instancias_lv5, Digimon.instancias_lv6);
+    criarSetas(Digimon.instancias_lv6, null);
+
+}
+
+function criarSetas(instancias, instancias_proximo_nivel) {
+   
+
+    for (let index = 0; index < instancias.length; index++) {
+        let digi = instancias[index];
+
+        let nome_formatado = "digimon_" + digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+        const elemento = document.querySelector(`#${nome_formatado}`);
+        const coordenadas = elemento.getBoundingClientRect();
+
+        let posicao_do_digi = encontrarPosicao(digi, instancias);
+        //console.log(digi.getNome() + ": " + posicao_do_digi);
+
+        let color = `rgba(${getRandomArbitrary(0, 255)}, ${getRandomArbitrary(0, 255)}, ${getRandomArbitrary(0, 255)}, 1)`;
+
+        for (let i = 0; i < digi.getEvolucoes().length; i++) {
+            let nome_atual_formatado = digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+            let nome_evolucao_formatado = digi.getEvolucoes()[i].toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+            let seta_nome_formatado = "seta_digimon_" + nome_atual_formatado + "_para_" + nome_evolucao_formatado;
+            //console.log(coordenadas.left + " " + (coordenadas.left + 620) + " " + coordenadas.top + " " + (coordenadas.top + 110));
+            
+            //pegar coordenadas da evolucao
+            const elemento_evo = document.querySelector(`#digimon_${nome_evolucao_formatado}`);
+            const coordenadas_evo = elemento_evo.getBoundingClientRect();
+            //console.log(`EVO - X: ${coordenadas_evo.left}, Y: ${coordenadas_evo.top}`);
+            
+            let comprimento = distancia(coordenadas.left + 625, coordenadas.top + 110, coordenadas_evo.left, coordenadas_evo.top + 110);
+            //console.log("Comprimento da seta: " + comprimento);
+
+            let graus = angulo(coordenadas.left + 625, coordenadas.top + 110, coordenadas_evo.left, coordenadas_evo.top + 110);
+            //console.log("Ângulo da seta: " + graus);
+
+            
+
+
+            
+
+            let mensagem = `<seta id = "${seta_nome_formatado}" style = "
+            width: ${comprimento}px;
+            left: ${coordenadas.left + 625}px; 
+            top: ${coordenadas.top + 110}px;
+            transform: rotate(${graus}deg);
+            background-color: ${color};
+            " > `;
+            document.querySelector(".setas").innerHTML += mensagem;
+
+        }
+    }
+}
+
+
+function encontrarPosicao(Digimon, instancias_lv) {
+    const index = instancias_lv.indexOf(Digimon);
+    return index;
+}
+
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function distancia(x1, y1, x2, y2) {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+function angulo(x1, y1, x2, y2) {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    return Math.atan2(dy, dx) * (180 / Math.PI);
 }
