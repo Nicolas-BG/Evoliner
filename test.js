@@ -3,54 +3,98 @@ import Digimon from "./Digimon.js";
 function main() {
     
     window.scrollTo(0, 0);
+    window.scroll(0, 0);
 
     
+    const Popomon = new Digimon("Popomon", 1);
+    Popomon.setImagem("https://wikimon.net/images/0/06/Popomon.jpg")
+    const Punimon = new Digimon("Punimon", 1);
+    Punimon.setImagem("https://wikimon.net/images/a/a0/Punimon.jpg")
 
-    const botamon = new Digimon("Botamon", 1);
-    const koromon = new Digimon("Koromon", 2);
-    const agumon = new Digimon("Agumon", 3);
-    const greymon = new Digimon("Greymon", 4);
-    const tyranomon = new Digimon("Tyranomon", 4);
-    const metalgreymon_vaccine = new Digimon("MetalGreymon (O)", 5);
-    const metalgreymon_virus = new Digimon("MetalGreymon (B)", 5);
-    const metaltyranomon = new Digimon("MetalTyranomon", 5);
-    const mastertyranomon = new Digimon("MasterTyranomon", 5);
+    const Frimon = new Digimon("Frimon", 2);
+    Frimon.setImagem("https://wikimon.net/images/b/b8/Frimon.jpg");
+    const Tsunomon = new Digimon("Tsunomon", 2);
+    Tsunomon.setImagem("https://wikimon.net/images/5/59/Tunomon.jpg");
 
-    const wargreymon = new Digimon("WarGreymon", 6);
-    const blitzgreymon = new Digimon("BlitzGreymon", 6);
-    const rusttyranomon = new Digimon("RustTyranomon", 6);
-    const dinomon = new Digimon("Dinomon", 6);
-    const mugendramon = new Digimon("Mugendramon", 6);
+    const Liollmon = new Digimon("Liollmon", 3);
+    Liollmon.setImagem("https://wikimon.net/images/7/7f/Liollmon.jpg");
+    const Elecmon = new Digimon("Elecmon", 3);
+    Elecmon.setImagem("https://wikimon.net/images/d/dc/Elecmon.jpg");
 
-    botamon.setImagem("https://static.wikia.nocookie.net/digimonat/images/a/ae/Botamon_b.jpg/revision/latest?cb=20131112230618&path-prefix=pt");
-    koromon.setImagem("https://wikimon.net/images/6/6e/Koromon.jpg");
-    agumon.setImagem("https://wikimon.net/images/7/72/Agumon.jpg");
-    greymon.setImagem("https://wikimon.net/images/6/6c/Greymon.jpg");
-    tyranomon.setImagem("https://wikimon.net/images/2/29/Tyranomon.jpg");
-    metalgreymon_vaccine.setImagem("https://wikimon.net/images/d/d8/Metalgreymon.jpg");
-    metalgreymon_virus.setImagem("https://static.wikia.nocookie.net/digimon/images/0/02/MetalGreymon_%28Virus%29_b.jpg/revision/latest?cb=20120406033001");
-    metaltyranomon.setImagem("https://wikimon.net/images/7/76/Metaltyranomon.jpg");
-    mastertyranomon.setImagem("https://wikimon.net/images/4/40/Mastertyranomon.jpg");
-    wargreymon.setImagem("https://static.wikia.nocookie.net/digimonat/images/4/49/WarGreymon_b.jpg/revision/latest?cb=20221031064703&path-prefix=pt");
-    blitzgreymon.setImagem("https://static.wikia.nocookie.net/digimonat/images/b/bb/BlitzGreymon_b.jpg/revision/latest?cb=20210215214554&path-prefix=pt");
-    rusttyranomon.setImagem("https://static.wikia.nocookie.net/digimonat/images/c/c1/RustTyranomon_b.jpg/revision/latest?cb=20230207171810&path-prefix=pt");
-    dinomon.setImagem("https://static.wikia.nocookie.net/digimonat/images/c/c2/Dinomon_b.jpg/revision/latest?cb=20240808155030&path-prefix=pt");
-    mugendramon.setImagem("https://static.wikia.nocookie.net/digimonat/images/e/ef/Mugendramon_b.jpg/revision/latest/scale-to-width-down/1000?cb=20230512041515&path-prefix=pt");
+    const Leomon = new Digimon("Leomon", 4);
+    Leomon.setImagem("https://wikimon.net/images/6/68/Leomon.jpg");
+    const Liamon = new Digimon("Liamon", 4);
+    Liamon.setImagem("https://wikimon.net/images/7/71/Liamon.jpg");
+    const Cougarmon = new Digimon("Cougarmon", 4);
+    Cougarmon.setImagem("https://wikimon.net/images/b/bc/Cougarmon.jpg");
+    const Lowemon = new Digimon("Lowemon", 4);
+    Lowemon.setImagem("https://wikimon.net/images/f/f7/Lowemon2.jpg");
+    const Aegiomon = new Digimon("Aegiomon", 4);
+    Aegiomon.setImagem("https://wikimon.net/images/9/98/Aegiomon2.jpg");
 
-    wargreymon.addMultiPreEvolucao([metalgreymon_vaccine, mastertyranomon]);
-    blitzgreymon.addMultiPreEvolucao([metalgreymon_virus, metalgreymon_vaccine]);
-    rusttyranomon.addPreEvolucao(metaltyranomon);
-    dinomon.addPreEvolucao(mastertyranomon);
-    mugendramon.addMultiPreEvolucao([metalgreymon_virus, metaltyranomon]);
-    mastertyranomon.addPreEvolucao(tyranomon);
-    metaltyranomon.addPreEvolucao(tyranomon);
-    metalgreymon_vaccine.addPreEvolucao(greymon);
-    metalgreymon_virus.addPreEvolucao(greymon);
-    tyranomon.addPreEvolucao(agumon);
-    greymon.addPreEvolucao(agumon);
-    agumon.addPreEvolucao(koromon);
-    koromon.addPreEvolucao(botamon);
+    const Panjyamon = new Digimon("Panjyamon", 5);
+    Panjyamon.setImagem("https://wikimon.net/images/8/80/Panjyamon.jpg");
+    const Grappuleomon = new Digimon("Grappuleomon", 5);
+    Grappuleomon.setImagem("https://wikimon.net/images/4/41/Grappuleomon.jpg");
+    const Loaderleomon = new Digimon("Loaderleomon", 5);
+    Loaderleomon.setImagem("https://wikimon.net/images/8/88/Loaderliomon.jpg");
+    const Murasamemon = new Digimon("Murasamemon", 5);
+    Murasamemon.setImagem("https://wikimon.net/images/9/99/Murasamemon.jpg");
+    const Kaiserleomon = new Digimon("Kaiserleomon", 5);
+    Kaiserleomon.setImagem("https://wikimon.net/images/3/35/Kaiserleomon.jpg");
+    const Aegiochusmon = new Digimon("Aegiochusmon", 5);
+    Aegiochusmon.setImagem("https://wikimon.net/images/b/bd/Aegiochusmon.jpg");
+    const Aegiochusmon_Blue = new Digimon("Aegiochusmon B", 5);
+    Aegiochusmon_Blue.setImagem("https://wikimon.net/images/0/08/Aegiochusmon_blue.jpg");
+    const Aegiochusmon_Green = new Digimon("Aegiochusmon G", 5);
+    Aegiochusmon_Green.setImagem("https://wikimon.net/images/d/d4/Aegiochusmon_green.jpg");
+    const Aegiochusmon_Holy = new Digimon("Aegiochusmon H", 5);
+    Aegiochusmon_Holy.setImagem("https://wikimon.net/images/5/51/Aegiochusmon_holy.jpg");
+    const Aegiochusmon_Dark = new Digimon("Aegiochusmon D", 5);
+    Aegiochusmon_Dark.setImagem("https://wikimon.net/images/7/7a/Aegiochusmon_dark.jpg");
+    
 
+    const Regulumon = new Digimon("Regulumon", 6);
+    Regulumon.setImagem("https://wikimon.net/images/f/f1/Regulumon.jpg");
+    const Saberleomon = new Digimon("Saberleomon", 6);
+    Saberleomon.setImagem("https://wikimon.net/images/e/e2/Saberleomon.jpg");
+    const Heavyleomon = new Digimon("Heavyleomon", 6);
+    Heavyleomon.setImagem("https://wikimon.net/images/9/9d/Heavyleomon.jpg");
+    const Bancholeomon = new Digimon("Bancholeomon", 6);
+    Bancholeomon.setImagem("https://wikimon.net/images/8/8f/Bancholeomon.jpg");
+    const Habakirimon = new Digimon("Habakirimon", 6);
+    Habakirimon.setImagem("https://wikimon.net/images/a/a8/Dcg-ST23-05.jpg");
+    const Ancientsphinxmon = new Digimon("Ancientsphinxmon", 6);
+    Ancientsphinxmon.setImagem("https://wikimon.net/images/8/84/Ancientsphinxmon.jpg");
+    const Jupitermon = new Digimon("Jupitermon", 6);
+    Jupitermon.setImagem("https://wikimon.net/images/e/e0/Jupitermon.jpg");
+    
+
+    Popomon.addEvolucao(Frimon);
+    Punimon.addEvolucao(Tsunomon);
+
+    Frimon.addEvolucao(Liollmon);
+    Tsunomon.addEvolucao(Elecmon);
+
+    Liollmon.addMultiEvolucao([Leomon, Liamon, Cougarmon, Lowemon]); 
+    Elecmon.addMultiEvolucao([Aegiomon, Leomon])
+
+    Leomon.addMultiEvolucao([Panjyamon, Grappuleomon]);
+    Liamon.addEvolucao(Loaderleomon);
+    Cougarmon.addEvolucao(Murasamemon);
+    Lowemon.addEvolucao(Kaiserleomon);
+    Aegiomon.addMultiEvolucao([Aegiochusmon, Aegiochusmon_Blue, Aegiochusmon_Green, Aegiochusmon_Holy, Aegiochusmon_Dark]);
+
+    Panjyamon.addMultiEvolucao([Regulumon, Saberleomon]);
+    Grappuleomon.addMultiEvolucao([Saberleomon, Heavyleomon, Bancholeomon]);
+    Loaderleomon.addMultiEvolucao([Heavyleomon, Bancholeomon]);
+    Murasamemon.addEvolucao(Habakirimon);
+    Kaiserleomon.addEvolucao(Ancientsphinxmon);
+    Aegiochusmon.addEvolucao(Jupitermon);
+    Aegiochusmon_Blue.addEvolucao(Jupitermon);
+    Aegiochusmon_Green.addEvolucao(Jupitermon);
+    Aegiochusmon_Holy.addEvolucao(Jupitermon);
+    Aegiochusmon_Dark.addEvolucao(Jupitermon);
 
     exibirDigimonTodos();   
     criarSetasTodos();
@@ -110,17 +154,21 @@ function exibirDigimonTodos(){
 }
 
 function criarSetasTodos() {
+    window.scrollTo(0, 0);
+    window.scroll(0, 0);
     criarSetas(Digimon.instancias_lv1, Digimon.instancias_lv2);
     criarSetas(Digimon.instancias_lv2, Digimon.instancias_lv3);
     criarSetas(Digimon.instancias_lv3, Digimon.instancias_lv4);
     criarSetas(Digimon.instancias_lv4, Digimon.instancias_lv5);
     criarSetas(Digimon.instancias_lv5, Digimon.instancias_lv6);
     criarSetas(Digimon.instancias_lv6, null);
+    window.scrollTo(0, 0);
+    window.scroll(0, 0);
 
 }
 
 function criarSetas(instancias, instancias_proximo_nivel) {
-
+    
 
     for (let index = 0; index < instancias.length; index++) {
         let digi = instancias[index];
