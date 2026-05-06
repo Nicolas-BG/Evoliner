@@ -234,7 +234,7 @@ export default class Digimon {
         if (evolucoes.length === 0) {
             return laterEvolucoes;
         }
-        laterEvolucoes = [...this.getEvolucoes()];
+        laterEvolucoes = [...this.getEvolucoesIntern()];
 
         for (let i = 0; i < evolucoes.length; i++) {
             if (evolucoes[i].getEvolucoesIntern().length > 0) {
@@ -251,7 +251,7 @@ export default class Digimon {
         return this.#pre_evolucoes.map(pre_evolucao => pre_evolucao.getNome());
     }
 
-    #getPreEvolucoesIntern() {
+    getPreEvolucoesIntern() {
         return this.#pre_evolucoes;
     }
 
@@ -283,15 +283,15 @@ export default class Digimon {
     }
     ///////
     getLaterPreEvolucoes() {
-        const pre_evolucoes = this.#getPreEvolucoesIntern();
+        const pre_evolucoes = this.getPreEvolucoesIntern();
         let laterPreEvolucoes = [];
         if (pre_evolucoes.length === 0) {
             return laterPreEvolucoes;
         }
-        laterPreEvolucoes = [...this.getPreEvolucoes()];
+        laterPreEvolucoes = [...this.getPreEvolucoesIntern()];
 
         for (let i = 0; i < pre_evolucoes.length; i++) {
-            if (pre_evolucoes[i].#getPreEvolucoesIntern().length > 0) {
+            if (pre_evolucoes[i].getPreEvolucoesIntern().length > 0) {
                 laterPreEvolucoes.push(...pre_evolucoes[i].getLaterPreEvolucoes());
             }
         }
