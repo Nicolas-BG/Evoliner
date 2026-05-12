@@ -6,6 +6,7 @@ export default class Digimon {
     #imagem = "";
     #evolucoes = [];
     #pre_evolucoes = [];
+    #slide_evolucoes = [];
     static instancias = [];
     static instancias_lv1 = [];
     static instancias_lv2 = [];
@@ -13,13 +14,15 @@ export default class Digimon {
     static instancias_lv4 = [];
     static instancias_lv5 = [];
     static instancias_lv6 = [];
+    static instancias_lv7 = [];
+    static instancias_lv8 = [];
 
 
     //setar construtor
 
     constructor(nome, nivel) {
         if (typeof nivel === 'number') {
-            if (nivel < 1 || nivel > 6) {
+            if (nivel < 1 || nivel > 8) {
                 throw new Error("Nível inválido");
             }
             switch (nivel) {
@@ -41,9 +44,15 @@ export default class Digimon {
                 case 6:
                     nivel = "Ultimate";
                     break;
+                case 7:
+                    nivel = "Ultimate+";
+                    break;
+                case 8:
+                    nivel = "Ultimate++";
+                    break;
             }
         } else {
-            if (nivel !== "Baby 1" && nivel !== "Baby 2" && nivel !== "Child" && nivel !== "Adult" && nivel !== "Perfect" && nivel !== "Ultimate") {
+            if (nivel !== "Baby 1" && nivel !== "Baby 2" && nivel !== "Child" && nivel !== "Adult" && nivel !== "Perfect" && nivel !== "Ultimate" && nivel !== "Ultimate+" && nivel !== "Ultimate++") {
                 throw new Error("Nível inválido");
             }
         }
@@ -69,6 +78,12 @@ export default class Digimon {
             case "Ultimate":
                 Digimon.instancias_lv6.push(this);
                 break;
+            case "Ultimate+":
+                Digimon.instancias_lv7.push(this);
+                break;
+            case "Ultimate++":
+                Digimon.instancias_lv8.push(this);
+                break;
         }
     }
 
@@ -88,7 +103,7 @@ export default class Digimon {
     }
     setNivel(nivel) {
         if (typeof nivel === 'number') {
-            if (nivel < 1 || nivel > 6) {
+            if (nivel < 1 || nivel > 8) {
                 throw new Error("Nível inválido");
             }
             switch (nivel) {
@@ -110,13 +125,19 @@ export default class Digimon {
                 case 6:
                     nivel = "Ultimate";
                     break;
+                case 7:
+                    nivel = "Ultimate+";
+                    break;
+                case 8:
+                    nivel = "Ultimate++";
+                    break;
             }
         } else {
-            if (nivel !== "Baby 1" && nivel !== "Baby 2" && nivel !== "Child" && nivel !== "Adult" && nivel !== "Perfect" && nivel !== "Ultimate") {
+            if (nivel !== "Baby 1" && nivel !== "Baby 2" && nivel !== "Child" && nivel !== "Adult" && nivel !== "Perfect" && nivel !== "Ultimate" && nivel !== "Ultimate+" && nivel !== "Ultimate++") {
                 throw new Error("Nível inválido");
             }
         }        
-        if (nivel !== "Baby 1" && nivel !== "Baby 2" && nivel !== "Child" && nivel !== "Adult" && nivel !== "Perfect" && nivel !== "Ultimate") {
+        if (nivel !== "Baby 1" && nivel !== "Baby 2" && nivel !== "Child" && nivel !== "Adult" && nivel !== "Perfect" && nivel !== "Ultimate" && nivel !== "Ultimate+" && nivel !== "Ultimate++") {
             throw new Error("Nível inválido");
         }
         switch (this.#nivel) {
@@ -156,6 +177,18 @@ export default class Digimon {
                     Digimon.instancias_lv6.splice(index6, 1); // 2nd parameter means remove one item only
                 }
                 break;
+            case "Ultimate+":
+                const index7 = Digimon.instancias_lv7.indexOf(this);
+                if (index7 > -1) { // only splice array when item is found
+                    Digimon.instancias_lv7.splice(index7, 1); // 2nd parameter means remove one item only
+                }
+                break;
+            case "Ultimate++":
+                const index8 = Digimon.instancias_lv8.indexOf(this);
+                if (index8 > -1) { // only splice array when item is found
+                    Digimon.instancias_lv8.splice(index8, 1); // 2nd parameter means remove one item only
+                }
+                break;
         }
         this.#nivel = nivel;
         switch (this.#nivel) {
@@ -176,6 +209,12 @@ export default class Digimon {
                 break;
             case "Ultimate":
                 Digimon.instancias_lv6.push(this);
+                break;
+            case "Ultimate+":
+                Digimon.instancias_lv7.push(this);
+                break;
+            case "Ultimate++":
+                Digimon.instancias_lv8.push(this);
                 break;
         }
     }
@@ -299,11 +338,48 @@ export default class Digimon {
         return laterPreEvolucoes;
     }
 
+    //slide evo
 
+    getSlideEvolucoes() {
+        return this.#slide_evolucoes.map(slide => slide.getNome());
+    }
+
+    getSlideEvolucoesIntern() {
+        return this.#slide_evolucoes;
+    }
+
+    addSlideEvolucao(slide_evolucao) {
+        this.#slide_evolucoes.push(slide_evolucao);
+        slide_evolucao.addSlideEvolucaoSimple(this);
+    }
+
+    addSlideEvolucaoSimple(slide_evolucao) {
+        this.#slide_evolucoes.push(slide_evolucao);
+    }
+
+    addMultiSlideEvolucao(slide_evolucoes) {
+        for (let i = 0; i < slide_evolucoes.length; i++) {
+            slide_evolucoes[i].addSlideEvolucaoSimple(this);
+        }
+        this.#slide_evolucoes.push(...slide_evolucoes);
+    }
+
+    deleteSlideEvolucao(slide_evolucao) {
+        const index = this.#slide_evolucoes.indexOf(slide_evolucao);
+        if (index > -1) {
+            this.#slide_evolucoes.splice(index, 1);
+        }
+    }
+
+    resetEvolucoes() {
+        this.#slide_evolucoes = [];
+    }
+ 
 
     resetAllEvolucoes() {
         this.#pre_evolucoes = [];
         this.#evolucoes = [];
+        this.#slide_evolucoes
     }
 
 }

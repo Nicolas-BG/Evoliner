@@ -1,25 +1,32 @@
 import Digimon from "./Digimon.js";
 
 function main() {
-    
+
     window.scrollTo(0, 0);
     window.scroll(0, 0);
 
-    
+
     const Popomon = new Digimon("Popomon", 1);
     Popomon.setImagem("https://wikimon.net/images/0/06/Popomon.jpg")
     const Punimon = new Digimon("Punimon", 1);
     Punimon.setImagem("https://wikimon.net/images/a/a0/Punimon.jpg")
+    const Puttimon = new Digimon("Puttimon", 1);
+    Puttimon.setImagem("https://wikimon.net/images/c/c4/Puttimon.jpg")
 
     const Frimon = new Digimon("Frimon", 2);
     Frimon.setImagem("https://wikimon.net/images/b/b8/Frimon.jpg");
     const Tsunomon = new Digimon("Tsunomon", 2);
     Tsunomon.setImagem("https://wikimon.net/images/5/59/Tunomon.jpg");
+    const Cupimon = new Digimon("Cupimon", 2);
+    Cupimon.setImagem("https://wikimon.net/images/0/06/Cupimon.jpg");
 
     const Liollmon = new Digimon("Liollmon", 3);
     Liollmon.setImagem("https://wikimon.net/images/7/7f/Liollmon.jpg");
     const Elecmon = new Digimon("Elecmon", 3);
     Elecmon.setImagem("https://wikimon.net/images/d/dc/Elecmon.jpg");
+    const Lucemon = new Digimon("Lucemon", 3);
+    Lucemon.setImagem("https://wikimon.net/images/e/e7/Lucemon2.jpg");
+
 
     const Leomon = new Digimon("Leomon", 4);
     Leomon.setImagem("https://wikimon.net/images/6/68/Leomon.jpg");
@@ -52,12 +59,15 @@ function main() {
     Aegiochusmon_Holy.setImagem("https://wikimon.net/images/5/51/Aegiochusmon_holy.jpg");
     const Aegiochusmon_Dark = new Digimon("Aegiochusmon D", 5);
     Aegiochusmon_Dark.setImagem("https://wikimon.net/images/7/7a/Aegiochusmon_dark.jpg");
-    
+    const Lucemon_Falldown_Mode = new Digimon("Lucemon FM", 5);
+    Lucemon_Falldown_Mode.setImagem("https://wikimon.net/images/7/76/Lucemon_falldown.jpg");
 
     const Regulumon = new Digimon("Regulumon", 6);
     Regulumon.setImagem("https://wikimon.net/images/f/f1/Regulumon.jpg");
     const Saberleomon = new Digimon("Saberleomon", 6);
     Saberleomon.setImagem("https://wikimon.net/images/e/e2/Saberleomon.jpg");
+    const Dinotigermon = new Digimon("Dinotigermon", 6);
+    Dinotigermon.setImagem("https://wikimon.net/images/thumb/3/34/Dinotigermon.jpg/600px-Dinotigermon.jpg");
     const Heavyleomon = new Digimon("Heavyleomon", 6);
     Heavyleomon.setImagem("https://wikimon.net/images/9/9d/Heavyleomon.jpg");
     const Bancholeomon = new Digimon("Bancholeomon", 6);
@@ -68,18 +78,40 @@ function main() {
     Ancientsphinxmon.setImagem("https://wikimon.net/images/8/84/Ancientsphinxmon.jpg");
     const Jupitermon = new Digimon("Jupitermon", 6);
     Jupitermon.setImagem("https://wikimon.net/images/e/e0/Jupitermon.jpg");
-    
+    const Lucemon_Satan_Mode = new Digimon("Lucemon SM", 6);
+    Lucemon_Satan_Mode.setImagem("https://wikimon.net/images/f/f6/Lucemon_satan2.jpg");
+
+    const Tlalocmon = new Digimon("Tlalocmon", 7);
+    Tlalocmon.setImagem("https://wikimon.net/images/8/8c/Tlalocmon.jpg");
+    const Bancholeomon_Burst_Mode = new Digimon("Bancholeomon BM", 7);
+    Bancholeomon_Burst_Mode.setImagem("https://wikimon.net/images/7/76/DS46_Bancholeomon_burst.jpg");
+    const Chaosmon = new Digimon("Chaosmon", 7);
+    Chaosmon.setImagem("https://wikimon.net/images/thumb/9/93/Chaosmon.jpg/600px-Chaosmon.jpg");
+    const Chaosmon_Valdur_Arm = new Digimon("Chaosmon VA", 7);
+    Chaosmon_Valdur_Arm.setImagem("https://wikimon.net/images/a/a3/Chaosmon_valdurarm.jpg");
+    const Jupitermon_Wrath_Mode = new Digimon("Jupitermon WM", 7);
+    Jupitermon_Wrath_Mode.setImagem("https://wikimon.net/images/1/1f/Jupitermon_wrath.jpg");
+
+    const Ultimate_Chaosmon = new Digimon("Ultimatechaosmon", 8);
+    Ultimate_Chaosmon.setImagem("https://wikimon.net/images/c/cc/Ultimatechaosmon.jpg");
+
 
     Popomon.addEvolucao(Frimon);
     Punimon.addEvolucao(Tsunomon);
+    Puttimon.addEvolucao(Cupimon);
+
 
     Frimon.addEvolucao(Liollmon);
     Tsunomon.addEvolucao(Elecmon);
+    Cupimon.addEvolucao(Lucemon);
 
-    Liollmon.addMultiEvolucao([Leomon, Liamon, Cougarmon, Lowemon]); 
+
+    Liollmon.addMultiEvolucao([Leomon, Liamon, Cougarmon, Lowemon]);
     Elecmon.addMultiEvolucao([Aegiomon, Leomon])
+    Lucemon.addEvolucao(Lucemon_Falldown_Mode);
 
     Leomon.addMultiEvolucao([Panjyamon, Grappuleomon]);
+    Leomon.addSlideEvolucao(Lowemon);
     Liamon.addEvolucao(Loaderleomon);
     Cougarmon.addEvolucao(Murasamemon);
     Lowemon.addEvolucao(Kaiserleomon);
@@ -95,8 +127,18 @@ function main() {
     Aegiochusmon_Green.addEvolucao(Jupitermon);
     Aegiochusmon_Holy.addEvolucao(Jupitermon);
     Aegiochusmon_Dark.addEvolucao(Jupitermon);
+    Lucemon_Falldown_Mode.addEvolucao(Lucemon_Satan_Mode);
 
-    exibirDigimonTodos();   
+    Saberleomon.addSlideEvolucao(Dinotigermon);
+
+    Saberleomon.addEvolucao(Tlalocmon);
+    Bancholeomon.addMultiEvolucao([Bancholeomon_Burst_Mode, Chaosmon, Chaosmon_Valdur_Arm]);
+    Jupitermon.addEvolucao(Jupitermon_Wrath_Mode);
+
+    Chaosmon.addEvolucao(Ultimate_Chaosmon);
+    Chaosmon_Valdur_Arm.addEvolucao(Ultimate_Chaosmon);
+
+    exibirDigimonTodos();
     criarSetasTodos();
     Desfocar()
 
@@ -111,17 +153,27 @@ function exibirDigimons(instancias, id) {
 
         let mensagem = `<div class="digimon_template" id="${nome_formatado}">
             <div class="evos">
-                <div class="evos_content">Pre-Evolucoes:<br>${digi.getPreEvolucoes().length > 0 ? digi.getPreEvolucoes().join(";<br>") : "Nenhuma"}</div>
+                <div class="evos_content">Pre-Evolucoes:<br>${digi.getPreEvolucoes().length > 0 ? digi.getPreEvolucoes().join(";<br>") : "Nenhuma"}
+                 <div style = "color: red;">
+                    ${digi.getSlideEvolucoes().length > 0 ? digi.getSlideEvolucoes().join(" (SLD);<br>") : ""}
+                    ${digi.getSlideEvolucoes().length > 0 ? " (SLD)" : ""}
+                </div>
+                </div>
             </div>
             <div class="nome">
                 <div class="nome_center">
                     ${digi.getNome()}<br>
                     <img src="${digi.getImagem()}" alt="${digi.getNome()}"><br>
-                    Nivel: ${digi.getNivel()} 
+                    Nivel: ${digi.getNivel() == "Ultimate+" || digi.getNivel() == "Ultimate++" ? "Ultimate" : digi.getNivel()} 
                 </div>
             </div>
             <div class="evos">
-                <div class="evos_content">Evolucoes:<br>${digi.getEvolucoes().length > 0 ? digi.getEvolucoes().join(";<br>") : "Nenhuma"}</div>
+                <div class="evos_content">Evolucoes:<br>${digi.getEvolucoes().length > 0 ? digi.getEvolucoes().join(";<br>") : "Nenhuma"}
+                <div style = "color: red;">
+                    ${digi.getSlideEvolucoes().length > 0 ? digi.getSlideEvolucoes().join(" (SLD);<br>") : ""}
+                    ${digi.getSlideEvolucoes().length > 0 ? " (SLD)" : ""}
+                </div>
+                </div>
             </div>
         </div>`
         if (index !== instancias.length - 1) {
@@ -144,13 +196,15 @@ function exibirDigimons(instancias, id) {
     }
 }
 
-function exibirDigimonTodos(){
+function exibirDigimonTodos() {
     exibirDigimons(Digimon.instancias_lv1, "lv1");
     exibirDigimons(Digimon.instancias_lv2, "lv2");
     exibirDigimons(Digimon.instancias_lv3, "lv3");
     exibirDigimons(Digimon.instancias_lv4, "lv4");
     exibirDigimons(Digimon.instancias_lv5, "lv5");
     exibirDigimons(Digimon.instancias_lv6, "lv6");
+    exibirDigimons(Digimon.instancias_lv7, "lv7");
+    exibirDigimons(Digimon.instancias_lv8, "lv8");
 }
 
 function criarSetasTodos() {
@@ -161,14 +215,16 @@ function criarSetasTodos() {
     criarSetas(Digimon.instancias_lv3, Digimon.instancias_lv4);
     criarSetas(Digimon.instancias_lv4, Digimon.instancias_lv5);
     criarSetas(Digimon.instancias_lv5, Digimon.instancias_lv6);
-    criarSetas(Digimon.instancias_lv6, null);
+    criarSetas(Digimon.instancias_lv6, Digimon.instancias_lv7);
+    criarSetas(Digimon.instancias_lv7, Digimon.instancias_lv8);
+    criarSetas(Digimon.instancias_lv8, null);
     window.scrollTo(0, 0);
     window.scroll(0, 0);
 
 }
 
 function criarSetas(instancias, instancias_proximo_nivel) {
-    
+
 
     for (let index = 0; index < instancias.length; index++) {
         let digi = instancias[index];
@@ -210,12 +266,51 @@ function criarSetas(instancias, instancias_proximo_nivel) {
             top: ${coordenadas.top + 110}px;
             transform: rotate(${graus}deg);
             ;
-            " > 
+            " >                 
                 <seta_content id = "${seta_nome_formatado}_color" style = "background-color: ${color}; width: 100%; height: 100%;"></seta_content>
                 <seta_after id = "${seta_nome_formatado}_after" style = "border-left: 10px solid ${color};"></seta_after>
             </seta>`;
             document.querySelector(".setas").insertAdjacentHTML("beforeend", mensagem);
 
+        }
+        
+        if (digi.getSlideEvolucoes().length > 0) {
+            
+            for (let i = 0; i < digi.getSlideEvolucoes().length; i++) {
+                let nome_atual_formatado = digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+                let nome_slide_formatado = digi.getSlideEvolucoes()[i].toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+                let seta_nome_formatado = "seta_digimon_" + nome_atual_formatado + "_para_" + nome_slide_formatado;
+                //console.log(coordenadas.left + " " + (coordenadas.left + 620) + " " + coordenadas.top + " " + (coordenadas.top + 110));
+
+                let seta_nome_reverso = "#seta_digimon_" + nome_slide_formatado + "_para_" + nome_atual_formatado;
+                let existe_seta = document.querySelector(seta_nome_reverso);
+
+                if (existe_seta == null) {
+
+                    //pegar coordenadas da evolucao
+                    const elemento_evo = document.querySelector(`#digimon_${nome_slide_formatado}`);
+                    const coordenadas_evo = elemento_evo.getBoundingClientRect();
+                    //console.log(`EVO - X: ${coordenadas_evo.left}, Y: ${coordenadas_evo.top}`);
+
+                    let comprimento = distancia(coordenadas.left + 312, coordenadas.top + 222, coordenadas_evo.left + 312, coordenadas_evo.top - 6);
+
+                    let graus = angulo(coordenadas.left + 312, coordenadas.top + 222, coordenadas_evo.left + 312, coordenadas_evo.top - 6);
+
+
+                    let mensagem = `<seta id = "${seta_nome_formatado}" style = "
+                    width: ${comprimento}px;
+                    left: ${coordenadas.left + 312}px; 
+                    top: ${coordenadas.top + 226}px;
+                    transform: rotate(${graus}deg);
+                    ;
+                    " >              
+                      <seta_before id = "${seta_nome_formatado}_before" style = "border-right: 10px solid ${color};"></seta_before>   
+                      <seta_content id = "${seta_nome_formatado}_color" style = "background-color: ${color}; width: 100%; height: 100%;"></seta_content>
+                      <seta_after id = "${seta_nome_formatado}_after" style = "border-left: 10px solid ${color};"></seta_after>
+                </seta>`;
+                    document.querySelector(".setas").insertAdjacentHTML("beforeend", mensagem);
+                }
+            }
         }
     }
 }
@@ -253,18 +348,23 @@ function FocarDigimon(Digi) {
     let resto = Digimon.instancias.filter(digimon => !Digi_Pre_e_Evos.includes(digimon) && digimon !== Digi);
     //console.log("Resto: " + resto.map(digimon => digimon.getNome()));
 
-    for (let i = 0; i < Digi_Pre_e_Evos.length; i++) {
-        let nome_formatado = "digimon_" + Digi_Pre_e_Evos[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
-        const elemento = document.querySelector(`#${nome_formatado}`);
-        elemento.style.opacity = "1";
-        elemento.style.border = "1px solid #ccc"
-    }
+
+
+
     for (let i = 0; i < resto.length; i++) {
         let nome_formatado = "digimon_" + resto[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
         const elemento = document.querySelector(`#${nome_formatado}`);
         elemento.style.opacity = "0.1";
         elemento.style.border = "1px solid #ccc"
     }
+    for (let i = 0; i < Digi_Pre_e_Evos.length; i++) {
+        let nome_formatado = "digimon_" + Digi_Pre_e_Evos[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+        const elemento = document.querySelector(`#${nome_formatado}`);
+        elemento.style.opacity = "1";
+        elemento.style.border = "1px solid #ccc"
+    }
+
+
 
     let nome_formatado = "digimon_" + Digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
     const elemento = document.querySelector(`#${nome_formatado}`);
@@ -276,7 +376,15 @@ function FocarDigimon(Digi) {
     });
 
     FocarDigimonEvosSetas(Digi);
-    FocarDigimonPreEvosSetas(Digi);    
+    FocarDigimonPreEvosSetas(Digi);
+    FocarDigimonSlidesSetas(Digi);
+
+    FocarSlides(Digi);
+    for (let i = 0; i < Digi_Evolucoes.length; i++) {
+        FocarSlides(Digi_Evolucoes[i]);
+    }
+
+    //Slides
 
 
 
@@ -284,15 +392,44 @@ function FocarDigimon(Digi) {
 
 }
 
-function FocarDigimonEvosSetas(Digi) {
+function FocarSlides(Digi) {
+    let Slide_evos = Digi.getSlideEvolucoesIntern();
+
+    for (let i = 0; i < Slide_evos.length; i++) {
+        let nome_formatado = "digimon_" + Slide_evos[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+        const elemento = document.querySelector(`#${nome_formatado}`);
+        elemento.style.opacity = "1";
+        elemento.style.border = "1px solid red"
+
+        /*
+        let Slide_evos_Evos = Slide_evos[i].getLaterEvolucoes();
+        for (let i = 0; i < Slide_evos_Evos.length; i++) {
+            let nome_formatado = "digimon_" + Slide_evos_Evos[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+            const elemento = document.querySelector(`#${nome_formatado}`);
+            elemento.style.opacity = "0.4";
+            elemento.style.border = "1px solid red"
+        }
+        FocarDigimonEvosSetas(Slide_evos[i], true);
+        */
+    }
+}
+
+function FocarDigimonEvosSetas(Digi, slide = false) {
     const evolucoes = Digi.getEvolucoesIntern();
     if (evolucoes.length === 0) {
     } else {
         for (let i = 0; i < evolucoes.length; i++) {
             let nome = `#seta_digimon_${Digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "")}_para_${evolucoes[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "")}`
             const seta_elemento = document.querySelector(nome);
-            seta_elemento.style.opacity = "1";
-            FocarDigimonEvosSetas(evolucoes[i]);
+            if (slide == true) {
+                /*
+                seta_elemento.style.opacity = "1";
+                FocarDigimonEvosSetas(evolucoes[i], true);
+                */
+            } else {
+                seta_elemento.style.opacity = "1";
+                FocarDigimonEvosSetas(evolucoes[i]);
+            }
         }
     }
 }
@@ -311,23 +448,41 @@ function FocarDigimonPreEvosSetas(Digi) {
     }
 }
 
+function FocarDigimonSlidesSetas(Digi) {
+    const slide = Digi.getSlideEvolucoesIntern();
+    if (slide.length === 0) {
+    } else {
+        for (let i = 0; i < slide.length; i++) {
+            let nome = `#seta_digimon_${Digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "")}_para_${slide[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "")}`
+            const seta_elemento = document.querySelector(nome);   
+            if (seta_elemento != null) {
+                seta_elemento.style.opacity = "1";                  
+            } else {
+                let nome_reverso = `#seta_digimon_${slide[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "")}_para_${Digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "")}`
+                const seta_elemento_r = document.querySelector(nome_reverso)
+                seta_elemento_r.style.opacity = "1";                     
+            }            
+        }
+    }
+}
+
 function Desfocar() {
     document.addEventListener("click", (evento) => {
 
-    const clicouDentro = evento.target.closest(".digimon_template");
+        const clicouDentro = evento.target.closest(".digimon_template");
 
-    if (!clicouDentro) {
-        const digimons = document.querySelectorAll(".digimon_template");
-        digimons.forEach(digimon => {
-            digimon.style.opacity = "1";
-            digimon.style.border = "1px solid #ccc"
-        });
-        document.querySelectorAll("seta").forEach(seta => {
-            seta.style.opacity = "1";
-        });
-    }
+        if (!clicouDentro) {
+            const digimons = document.querySelectorAll(".digimon_template");
+            digimons.forEach(digimon => {
+                digimon.style.opacity = "1";
+                digimon.style.border = "1px solid #ccc"
+            });
+            document.querySelectorAll("seta").forEach(seta => {
+                seta.style.opacity = "1";
+            });
+        }
 
-});
+    });
 }
 
 
@@ -337,5 +492,5 @@ function getRandomColor(min, max) {
     let g = getRandomArbitrary(min, max);
     let b = getRandomArbitrary(min, max);
 
-    return `rgba(${r}, ${g}, ${b}, 1)`; 
+    return `rgba(${r}, ${g}, ${b}, 1)`;
 }

@@ -11,6 +11,7 @@
     height: 220px;
     margin: 10px;   
     cursor: pointer;
+    background-color: rgb(255, 255, 255, 0.9);
     /*color: rgba(0, 0, 0, 1);*/
 }
 .digimon_template:hover{
@@ -90,7 +91,7 @@
     position: absolute;
     top:0px ;
     left:0px;
-    z-index: 9999;
+    z-index: -1;
 }
 
 seta {
@@ -109,8 +110,26 @@ seta_content {
 seta_after {    
 position: absolute;   
   content: "";
-  right: -20px;
+  right: -17px;
   top: -11px;
   border: 15px solid transparent;
   border-left-color: grey;
+}
+
+seta_before {    
+position: absolute;   
+  content: "";
+  left: -17px;
+  top: -11px;
+  border: 15px solid transparent;
+  border-right-color: grey;
+}
+
+.fixado {
+    position: fixed;
+    background-color: red;
+    min-width: 200px;
+    min-height: 200px;
+    bottom:50px;
+    left:50px;
 }
