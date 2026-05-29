@@ -1,27 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Web Page</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="setas"></div>
     <h1>DigiLiner</h1>
-    <div id="Divisao_de_niveis" class="Dividido">      
-        <div id="lv1" class="level_template"></div>  
+    <div id="Divisao_de_niveis" class="Dividido">
+        <div id="lv1" class="level_template"></div>
         <div id="lv2" class="level_template"></div>
-        <div id="lv3" class="level_template"></div>  
-        <div id="lv4" class="level_template"></div>  
-        <div id="lv5" class="level_template"></div>  
-        <div id="lv6" class="level_template"></div>    
+        <div id="lv3" class="level_template"></div>
+        <div id="lv4" class="level_template"></div>
+        <div id="lv5" class="level_template"></div>
+        <div id="lv6" class="level_template"></div>
         <div id="lv7" class="level_template"></div>
         <div id="lv8" class="level_template"></div>
-    </div>   
-    <div class="fixado"></div>
-    
-    <script type="module" src="test.js">   
+    </div>
+
+    <div class="Insert_Template">
+        <div class="title">Inserir Digimon</div>
+        <div class="forms">
+            Nome: <input type="text" id="input_name"><br>
+            Link da Imagem: <input type="text" id="input_image_link"><br>
+            <img id="preview_image" src="https://wikimon.net/images/6/61/Digimon_noimage.jpg" alt="Preview Image"><br>
+            Nivel:
+            <select id="level_select">
+                <option value=1>Baby 1</option>
+                <option value=2>Baby 2</option>
+                <option value=3>Child</option>
+                <option value=4>Adult</option>
+                <option value=5>Perfect</option>
+                <option value=6>Ultimate (Col1)</option>
+                <option value=7>Ultimate (Col2)</option>
+                <option value=8>Ultimate (Col3)</option>
+            </select><br>
+
+            <div class="evo_space">                
+
+                <div class="evos_box">Pre-Evolucoes
+                    <br><select id="pre_evos_select"></select> <button id="add_pre_evo" class="add_evo_button">+</button>
+                    <br>
+                    <div class="evos_added"></div>
+                </div>
+
+                <div class="evos_box">Slides
+                    <br> <select id="slides_select"></select> <button id="add_slide" class="add_evo_button">+</button>
+                    <br>
+                    <div class="evos_added"></div>
+                </div>
+
+                <div class="evos_box">Evolucoes
+                    <br> <select id="evos_select"></select> <button id="add_evo" class="add_evo_button">+</button>
+                    <br>
+                    <div class="evos_added"></div>
+                </div>
+
+
+            </div>
+            <button id="insert_button">Inserir</button>
+
+
+        </div>
+    </div>
+    <div class="Save_Close">
+        <div class="close_button">
+            <img id="imagem" src="https://icones.pro/wp-content/uploads/2022/05/icone-fermer-et-x-rouge.png"></img>
+        </div>
+    </div>
+
+    <script type="module" src="test.js">
     </script>
 </body>
+
 </html>

@@ -1,5 +1,7 @@
 import Digimon from "./Digimon.js";
 
+var fechado = false;
+
 function main() {
 
     window.scrollTo(0, 0);
@@ -141,10 +143,251 @@ function main() {
     exibirDigimonTodos();
     criarSetasTodos();
     Desfocar()
+    Insert_Tab();
+
+
+
 
 }
 
 main();
+
+function Insert_Tab() {
+    let botao = document.querySelector(`.close_button`);
+    botao.addEventListener("click", () => {
+        close();
+    });
+    
+    imagePreview();
+
+    const selectLevel = document.getElementById('level_select');
+    const selectedLevelValue = selectLevel.value;
+
+    levelstabs(selectedLevelValue);
+
+    selectLevel.addEventListener('change', (event) => {
+        const selectedValue = event.target.value;
+        levelstabs(selectedValue);
+    });
+
+}
+
+function levelstabs(level_number) {
+
+    const evo = document.getElementById("evos_select");
+    evo.innerHTML = `<option value="" disabled selected>_____</option>`
+
+    const pre_evo = document.getElementById("pre_evos_select");
+    pre_evo.innerHTML = `<option value="" disabled selected>_____</option>`
+
+    const slide_evo = document.getElementById("slides_select");
+    slide_evo.innerHTML = `<option value="" disabled selected>_____</option>`
+
+    switch (level_number) {
+        case "1":
+            console.log("level: 1");
+
+            for (let index = 0; index < Digimon.instancias_lv2.length; index++) {
+            evo.innerHTML += `<option value="${Digimon.instancias_lv2[index].getNome()}">${Digimon.instancias_lv2[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv1.length; index++) {
+                slide_evo.innerHTML += `<option value="${Digimon.instancias_lv1[index].getNome()}">${Digimon.instancias_lv1[index].getNome()}</option>`;
+            }
+
+            break;
+        case "2":
+            console.log("level: 2");
+
+            for (let index = 0; index < Digimon.instancias_lv3.length; index++) {
+            evo.innerHTML += `<option value="${Digimon.instancias_lv3[index]}">${Digimon.instancias_lv3[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv1.length; index++) {
+                pre_evo.innerHTML += `<option value="${Digimon.instancias_lv1[index].getNome()}">${Digimon.instancias_lv1[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv2.length; index++) {
+                slide_evo.innerHTML += `<option value="${Digimon.instancias_lv2[index].getNome()}">${Digimon.instancias_lv2[index].getNome()}</option>`;
+            }
+
+            break;
+        case "3":
+            console.log("level: 3");
+
+            for (let index = 0; index < Digimon.instancias_lv4.length; index++) {
+            evo.innerHTML += `<option value="${Digimon.instancias_lv4[index].getNome()}">${Digimon.instancias_lv4[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv2.length; index++) {
+                pre_evo.innerHTML += `<option value="${Digimon.instancias_lv2[index].getNome()}">${Digimon.instancias_lv2[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv3.length; index++) {
+                slide_evo.innerHTML += `<option value="${Digimon.instancias_lv3[index].getNome()}">${Digimon.instancias_lv3[index].getNome()}</option>`;
+            }
+
+            break;
+        case "4":
+            console.log("level: 4");
+
+            for (let index = 0; index < Digimon.instancias_lv5.length; index++) {
+            evo.innerHTML += `<option value="${Digimon.instancias_lv5[index].getNome()}">${Digimon.instancias_lv5[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv3.length; index++) {
+                pre_evo.innerHTML += `<option value="${Digimon.instancias_lv3[index].getNome()}">${Digimon.instancias_lv3[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv4.length; index++) {
+                slide_evo.innerHTML += `<option value="${Digimon.instancias_lv4[index].getNome()}">${Digimon.instancias_lv4[index].getNome()}</option>`;
+            }
+            break;
+        case "5":
+            console.log("level: 5");
+            
+            for (let index = 0; index < Digimon.instancias_lv6.length; index++) {
+            evo.innerHTML += `<option value="${Digimon.instancias_lv6[index].getNome()}">${Digimon.instancias_lv6[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv4.length; index++) {
+                pre_evo.innerHTML += `<option value="${Digimon.instancias_lv4[index].getNome()}">${Digimon.instancias_lv4[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv5.length; index++) {
+                slide_evo.innerHTML += `<option value="${Digimon.instancias_lv5[index].getNome()}">${Digimon.instancias_lv5[index].getNome()}</option>`;
+            }
+
+            break;
+        case "6":
+            console.log("level: 6");
+
+            for (let index = 0; index < Digimon.instancias_lv7.length; index++) {
+            evo.innerHTML += `<option value="${Digimon.instancias_lv7[index].getNome()}">${Digimon.instancias_lv7[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv5.length; index++) {
+                pre_evo.innerHTML += `<option value="${Digimon.instancias_lv5[index].getNome()}">${Digimon.instancias_lv5[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv6.length; index++) {
+                slide_evo.innerHTML += `<option value="${Digimon.instancias_lv6[index]}">${Digimon.instancias_lv6[index].getNome()}</option>`;
+            }
+
+            break;
+        case "7":
+            console.log("level: 7");
+
+            for (let index = 0; index < Digimon.instancias_lv8.length; index++) {
+            evo.innerHTML += `<option value="${Digimon.instancias_lv8[index].getNome()}">${Digimon.instancias_lv8[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv6.length; index++) {
+                pre_evo.innerHTML += `<option value="${Digimon.instancias_lv6[index].getNome()}">${Digimon.instancias_lv6[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv7.length; index++) {
+                slide_evo.innerHTML += `<option value="${Digimon.instancias_lv7[index].getNome()}">${Digimon.instancias_lv7[index].getNome()}</option>`;
+            }
+
+            break;
+        case "8":
+            console.log("level: 8");
+
+            for (let index = 0; index < Digimon.instancias_lv7.length; index++) {
+                pre_evo.innerHTML += `<option value="${Digimon.instancias_lv7[index].getNome()}">${Digimon.instancias_lv7[index].getNome()}</option>`;
+            }
+
+            for (let index = 0; index < Digimon.instancias_lv8.length; index++) {
+                slide_evo.innerHTML += `<option value="${Digimon.instancias_lv8[index].getNome()}">${Digimon.instancias_lv8[index].getNome()}</option>`;
+            }
+
+            break;
+        default:
+            console.log("Erro");
+    }
+
+
+}
+
+function imagePreview() {
+    const selectImageLink = document.getElementById('input_image_link');
+
+    let temporizador;
+    const tempoParaPausa = 800;
+
+    selectImageLink.addEventListener('input', (event) => {
+        const ImageLink = event.target.value;
+        clearTimeout(temporizador);
+
+        temporizador = setTimeout(() => {
+            const imagePreview = document.getElementById('preview_image');
+            if (isValidImageUrl(ImageLink) === true){                
+                imagePreview.src = ImageLink;
+            } else {
+                imagePreview.src = "https://wikimon.net/images/6/61/Digimon_noimage.jpg"
+            }            
+        }, tempoParaPausa);
+
+        
+    });
+}
+
+function isValidImageUrl(text) {
+  try {
+    const url = new URL(text);
+
+    // verifica se é http ou https
+    if (!["http:", "https:"].includes(url.protocol)) {
+      return false;
+    }
+
+    // extensões comuns de imagem
+    const imageExtensions = [
+      ".jpg",
+      ".jpeg",
+      ".png",
+      ".gif",
+      ".webp",
+      ".bmp",
+      ".svg",
+      ".avif"
+    ];
+
+    return imageExtensions.some(ext =>
+      url.pathname.toLowerCase().endsWith(ext)
+    );
+  } catch {
+    return false;
+  }
+}
+
+
+
+function close() {
+    let aba = document.querySelector(`.Insert_Template`);
+    if (fechado == false) {
+        //console.log("fechando");        
+        aba.style = `opacity: 0.25;
+            z-index: -999;
+            pointer-events: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;    
+            user-select: none;  `
+        fechado = true;
+    } else {
+        //console.log("abrindo")
+        aba.style = `opacity: 1;
+            z-index: 10;
+            pointer-events: default;
+            -webkit-user-select: default;
+            -ms-user-select: default;    
+            user-select: default;  `
+        fechado = false;
+    }
+
+
+}
 
 function exibirDigimons(instancias, id) {
     for (let index = 0; index < instancias.length; index++) {
@@ -273,9 +516,9 @@ function criarSetas(instancias, instancias_proximo_nivel) {
             document.querySelector(".setas").insertAdjacentHTML("beforeend", mensagem);
 
         }
-        
+
         if (digi.getSlideEvolucoes().length > 0) {
-            
+
             for (let i = 0; i < digi.getSlideEvolucoes().length; i++) {
                 let nome_atual_formatado = digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
                 let nome_slide_formatado = digi.getSlideEvolucoes()[i].toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
@@ -379,6 +622,7 @@ function FocarDigimon(Digi) {
     FocarDigimonPreEvosSetas(Digi);
     FocarDigimonSlidesSetas(Digi);
 
+
     FocarSlides(Digi);
     for (let i = 0; i < Digi_Evolucoes.length; i++) {
         FocarSlides(Digi_Evolucoes[i]);
@@ -454,29 +698,44 @@ function FocarDigimonSlidesSetas(Digi) {
     } else {
         for (let i = 0; i < slide.length; i++) {
             let nome = `#seta_digimon_${Digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "")}_para_${slide[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "")}`
-            const seta_elemento = document.querySelector(nome);   
+            const seta_elemento = document.querySelector(nome);
             if (seta_elemento != null) {
-                seta_elemento.style.opacity = "1";                  
+                seta_elemento.style.opacity = "1";
             } else {
                 let nome_reverso = `#seta_digimon_${slide[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "")}_para_${Digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "")}`
                 const seta_elemento_r = document.querySelector(nome_reverso)
-                seta_elemento_r.style.opacity = "1";                     
-            }            
+                seta_elemento_r.style.opacity = "1";
+            }
         }
+    }
+    const evos = Digi.getEvolucoesIntern()
+    for (let i = 0; i < evos.length; i++) {
+        FocarDigimonSlidesSetas(evos[i]);
     }
 }
 
 function Desfocar() {
     document.addEventListener("click", (evento) => {
 
+        // ignora clique no botão
+        if (evento.target.closest(".close_button")) {
+            return;
+        }
+
+        if (evento.target.closest(".Insert_Template")) {
+            return;
+        }
+
         const clicouDentro = evento.target.closest(".digimon_template");
 
         if (!clicouDentro) {
             const digimons = document.querySelectorAll(".digimon_template");
+
             digimons.forEach(digimon => {
                 digimon.style.opacity = "1";
-                digimon.style.border = "1px solid #ccc"
+                digimon.style.border = "1px solid #ccc";
             });
+
             document.querySelectorAll("seta").forEach(seta => {
                 seta.style.opacity = "1";
             });
