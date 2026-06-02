@@ -2,6 +2,12 @@ import Digimon from "./Digimon.js";
 
 var fechado = false;
 
+/*
+var evos_selecionadas = [];
+var pre_evos_selecionadas = [];
+var slides_selecionadas = [];
+*/
+
 function main() {
 
     window.scrollTo(0, 0);
@@ -140,24 +146,52 @@ function main() {
     Chaosmon.addEvolucao(Ultimate_Chaosmon);
     Chaosmon_Valdur_Arm.addEvolucao(Ultimate_Chaosmon);
 
-    exibirDigimonTodos();
-    criarSetasTodos();
-    Desfocar()
+    
+    Start_list();
     Insert_Tab();
-
-
 
 
 }
 
 main();
 
+function Start_list() {
+    document.getElementById("lv1").innerHTML = "";
+    document.getElementById("lv2").innerHTML = "";
+    document.getElementById("lv3").innerHTML = "";
+    document.getElementById("lv4").innerHTML = "";
+    document.getElementById("lv5").innerHTML = "";
+    document.getElementById("lv6").innerHTML = "";
+    document.getElementById("lv7").innerHTML = "";
+    document.getElementById("lv8").innerHTML = "";
+    document.querySelector(".setas").innerHTML = "";
+
+    exibirDigimonTodos();
+    criarSetasTodos();
+    Desfocar()
+    
+}
+
+function formatar_nome(nome) {
+    let nome_formatado = nome.toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+    return nome_formatado;
+}
+
+function find_digimon(nome) {
+    for (let i = 0; i < Digimon.instancias.length; i++) {
+        if (formatar_nome(Digimon.instancias[i].getNome()) === formatar_nome(nome)) {
+            return Digimon.instancias[i];
+        }
+    }
+    return null;
+}
+
 function Insert_Tab() {
     let botao = document.querySelector(`.close_button`);
     botao.addEventListener("click", () => {
         close();
     });
-    
+
     imagePreview();
 
     const selectLevel = document.getElementById('level_select');
@@ -170,25 +204,146 @@ function Insert_Tab() {
         levelstabs(selectedValue);
     });
 
+    addEvo("#add_pre_evo", "#pre_evos_added", "#pre_evos_select");
+    addEvo("#add_slide", "#slides_added", "#slides_select");
+    addEvo("#add_evo", "#evos_added", "#evos_select");
+
+    let insert_botao = document.querySelector(`#insert_button`);
+    insert_botao.addEventListener("click", () => {
+        insert_digimon();
+    });
+}
+
+function insert_digimon(){
+    let nome = document.querySelector("#input_name").value;
+    let link_da_imagem = document.querySelector("#input_image_link").value;
+    let nivel = document.querySelector("#level_select").value;
+    if (nome == "") {
+        alert("Por favor, preencha o nome do Digimon.");
+        return;
+    }
+    if (find_digimon(nome) != null) {
+        alert("Esse Digimon já foi adicionado, adicione outro");
+        return;
+    }
+    if (link_da_imagem == "") {
+        alert("Por favor, preencha o link da imagem.");
+        return;
+    }
+     if (!isValidImageUrl(link_da_imagem)) {
+        alert("Por favor, insira um link de imagem válido.");
+        return;
+    } 
+    console.log(`Nome: ${nome}, Link da Imagem: ${link_da_imagem}, Nivel: ${nivel}`);       
+    
+    let evos = getEvosFromBox("#evos_added");
+    let pre_evos = getEvosFromBox("#pre_evos_added");
+    let slide_evos = getEvosFromBox("#slides_added");
+    console.log("Evoluções: " + evos);
+    console.log("Pré-Evoluções: " + pre_evos);
+    console.log("Evoluções em Slide: " + slide_evos);
+    
+    var New_Digimon = new Digimon(nome, parseInt(nivel));
+    New_Digimon.setImagem(link_da_imagem);
+    for (let index = 0; index < evos.length; index++) {
+        New_Digimon.addEvolucao(find_digimon(evos[index]));
+    }
+    for (let index = 0; index < pre_evos.length; index++) {
+        New_Digimon.addPreEvolucao(find_digimon(pre_evos[index]));
+    }
+    for (let index = 0; index < slide_evos.length; index++) {
+        New_Digimon.addSlideEvolucao(find_digimon(slide_evos[index]));
+    }
+
+    Start_list()
+
+}
+
+function getEvosFromBox(box_id) {
+    const separador = `<separador></separador></div>`;
+    const evos_div = document.querySelector(box_id);
+    
+    let conteudo_formatado = evos_div.innerHTML.replaceAll("\n", "").replaceAll("\t", "").replaceAll(" ", "");
+    
+
+    if (conteudo_formatado  !== ``) {
+        let evos_separadas = conteudo_formatado.split(separador);
+        evos_separadas.pop();
+        let evos_separadas_formatadas = evos_separadas.map(evo_html => getNomeSemHtml(evo_html));
+        evos_separadas_formatadas = evos_separadas_formatadas.filter(evo => evo !== null);
+        return evos_separadas_formatadas;
+    } else {
+        return [];
+    }
+}
+
+function getNomeSemHtml(html) {
+    const match = html.match(/>\s*([^<]+)\s*<button/i);
+    return match ? match[1].trim() : null;
+}
+
+function addEvo(button_id, box_id, select_id) {
+    let botao = document.querySelector(button_id);
+    botao.addEventListener("click", () => {
+        let select = document.querySelector(select_id);
+        let box = document.querySelector(box_id);
+
+        if (select.value == "") {
+            return;
+        }
+
+        let nome_formatado = formatar_nome(select.value);
+
+        const contemEvo = box.innerHTML.includes(nome_formatado);
+
+        if (contemEvo) {
+            return;
+        }        
+
+        box.insertAdjacentHTML(
+            "beforeend",
+            `<div id="added_${nome_formatado}">
+                ${select.value} <button class="delete_evo_button" id="delete_evo_${nome_formatado}">X</button>
+        <separador></separador></div>`
+        );
+
+        addDeleteButton(nome_formatado);
+    });
+}
+
+function addDeleteButton(value) {
+    const evo_added = document.querySelector(`#added_${value}`);
+    const delete_button = document.querySelector(`#delete_evo_${value}`);
+
+    delete_button.addEventListener("click", () => {
+        evo_added.remove();
+    });
 }
 
 function levelstabs(level_number) {
 
     const evo = document.getElementById("evos_select");
     evo.innerHTML = `<option value="" disabled selected>_____</option>`
+    const evo_box = document.getElementById("evos_added");
+    evo_box.innerHTML = "";
 
     const pre_evo = document.getElementById("pre_evos_select");
     pre_evo.innerHTML = `<option value="" disabled selected>_____</option>`
+    const pre_evo_box = document.getElementById("pre_evos_added");
+    pre_evo_box.innerHTML = "";
 
     const slide_evo = document.getElementById("slides_select");
     slide_evo.innerHTML = `<option value="" disabled selected>_____</option>`
+    const slide_evo_box = document.getElementById("slides_added");
+    slide_evo_box.innerHTML = "";
+
 
     switch (level_number) {
         case "1":
             console.log("level: 1");
 
             for (let index = 0; index < Digimon.instancias_lv2.length; index++) {
-            evo.innerHTML += `<option value="${Digimon.instancias_lv2[index].getNome()}">${Digimon.instancias_lv2[index].getNome()}</option>`;
+                evo.innerHTML += `<option value="${Digimon.instancias_lv2[index].getNome()}">${Digimon.instancias_lv2[index].getNome()}</option>`;
             }
 
             for (let index = 0; index < Digimon.instancias_lv1.length; index++) {
@@ -200,7 +355,7 @@ function levelstabs(level_number) {
             console.log("level: 2");
 
             for (let index = 0; index < Digimon.instancias_lv3.length; index++) {
-            evo.innerHTML += `<option value="${Digimon.instancias_lv3[index]}">${Digimon.instancias_lv3[index].getNome()}</option>`;
+                evo.innerHTML += `<option value="${Digimon.instancias_lv3[index].getNome()}">${Digimon.instancias_lv3[index].getNome()}</option>`;
             }
 
             for (let index = 0; index < Digimon.instancias_lv1.length; index++) {
@@ -216,7 +371,7 @@ function levelstabs(level_number) {
             console.log("level: 3");
 
             for (let index = 0; index < Digimon.instancias_lv4.length; index++) {
-            evo.innerHTML += `<option value="${Digimon.instancias_lv4[index].getNome()}">${Digimon.instancias_lv4[index].getNome()}</option>`;
+                evo.innerHTML += `<option value="${Digimon.instancias_lv4[index].getNome()}">${Digimon.instancias_lv4[index].getNome()}</option>`;
             }
 
             for (let index = 0; index < Digimon.instancias_lv2.length; index++) {
@@ -232,7 +387,7 @@ function levelstabs(level_number) {
             console.log("level: 4");
 
             for (let index = 0; index < Digimon.instancias_lv5.length; index++) {
-            evo.innerHTML += `<option value="${Digimon.instancias_lv5[index].getNome()}">${Digimon.instancias_lv5[index].getNome()}</option>`;
+                evo.innerHTML += `<option value="${Digimon.instancias_lv5[index].getNome()}">${Digimon.instancias_lv5[index].getNome()}</option>`;
             }
 
             for (let index = 0; index < Digimon.instancias_lv3.length; index++) {
@@ -245,9 +400,9 @@ function levelstabs(level_number) {
             break;
         case "5":
             console.log("level: 5");
-            
+
             for (let index = 0; index < Digimon.instancias_lv6.length; index++) {
-            evo.innerHTML += `<option value="${Digimon.instancias_lv6[index].getNome()}">${Digimon.instancias_lv6[index].getNome()}</option>`;
+                evo.innerHTML += `<option value="${Digimon.instancias_lv6[index].getNome()}">${Digimon.instancias_lv6[index].getNome()}</option>`;
             }
 
             for (let index = 0; index < Digimon.instancias_lv4.length; index++) {
@@ -263,7 +418,7 @@ function levelstabs(level_number) {
             console.log("level: 6");
 
             for (let index = 0; index < Digimon.instancias_lv7.length; index++) {
-            evo.innerHTML += `<option value="${Digimon.instancias_lv7[index].getNome()}">${Digimon.instancias_lv7[index].getNome()}</option>`;
+                evo.innerHTML += `<option value="${Digimon.instancias_lv7[index].getNome()}">${Digimon.instancias_lv7[index].getNome()}</option>`;
             }
 
             for (let index = 0; index < Digimon.instancias_lv5.length; index++) {
@@ -279,7 +434,7 @@ function levelstabs(level_number) {
             console.log("level: 7");
 
             for (let index = 0; index < Digimon.instancias_lv8.length; index++) {
-            evo.innerHTML += `<option value="${Digimon.instancias_lv8[index].getNome()}">${Digimon.instancias_lv8[index].getNome()}</option>`;
+                evo.innerHTML += `<option value="${Digimon.instancias_lv8[index].getNome()}">${Digimon.instancias_lv8[index].getNome()}</option>`;
             }
 
             for (let index = 0; index < Digimon.instancias_lv6.length; index++) {
@@ -322,44 +477,44 @@ function imagePreview() {
 
         temporizador = setTimeout(() => {
             const imagePreview = document.getElementById('preview_image');
-            if (isValidImageUrl(ImageLink) === true){                
+            if (isValidImageUrl(ImageLink) === true) {
                 imagePreview.src = ImageLink;
             } else {
                 imagePreview.src = "https://wikimon.net/images/6/61/Digimon_noimage.jpg"
-            }            
+            }
         }, tempoParaPausa);
 
-        
+
     });
 }
 
 function isValidImageUrl(text) {
-  try {
-    const url = new URL(text);
+    try {
+        const url = new URL(text);
 
-    // verifica se é http ou https
-    if (!["http:", "https:"].includes(url.protocol)) {
-      return false;
+        // verifica se é http ou https
+        if (!["http:", "https:"].includes(url.protocol)) {
+            return false;
+        }
+
+        // extensões comuns de imagem
+        const imageExtensions = [
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".gif",
+            ".webp",
+            ".bmp",
+            ".svg",
+            ".avif"
+        ];
+
+        return imageExtensions.some(ext =>
+            url.pathname.toLowerCase().endsWith(ext)
+        );
+    } catch {
+        return false;
     }
-
-    // extensões comuns de imagem
-    const imageExtensions = [
-      ".jpg",
-      ".jpeg",
-      ".png",
-      ".gif",
-      ".webp",
-      ".bmp",
-      ".svg",
-      ".avif"
-    ];
-
-    return imageExtensions.some(ext =>
-      url.pathname.toLowerCase().endsWith(ext)
-    );
-  } catch {
-    return false;
-  }
 }
 
 
@@ -392,7 +547,7 @@ function close() {
 function exibirDigimons(instancias, id) {
     for (let index = 0; index < instancias.length; index++) {
         let digi = instancias[index];
-        let nome_formatado = "digimon_" + digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+        let nome_formatado = "digimon_" + formatar_nome(digi.getNome());
 
         let mensagem = `<div class="digimon_template" id="${nome_formatado}">
             <div class="evos">
@@ -472,7 +627,7 @@ function criarSetas(instancias, instancias_proximo_nivel) {
     for (let index = 0; index < instancias.length; index++) {
         let digi = instancias[index];
 
-        let nome_formatado = "digimon_" + digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+        let nome_formatado = "digimon_" + formatar_nome(digi.getNome());
         const elemento = document.querySelector(`#${nome_formatado}`);
         const coordenadas = elemento.getBoundingClientRect();
 
@@ -482,8 +637,8 @@ function criarSetas(instancias, instancias_proximo_nivel) {
         let color = getRandomColor(30, 220);
 
         for (let i = 0; i < digi.getEvolucoes().length; i++) {
-            let nome_atual_formatado = digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
-            let nome_evolucao_formatado = digi.getEvolucoes()[i].toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+            let nome_atual_formatado = formatar_nome(digi.getNome());
+            let nome_evolucao_formatado = formatar_nome(digi.getEvolucoes()[i]);
             let seta_nome_formatado = "seta_digimon_" + nome_atual_formatado + "_para_" + nome_evolucao_formatado;
             //console.log(coordenadas.left + " " + (coordenadas.left + 620) + " " + coordenadas.top + " " + (coordenadas.top + 110));
 
@@ -520,8 +675,8 @@ function criarSetas(instancias, instancias_proximo_nivel) {
         if (digi.getSlideEvolucoes().length > 0) {
 
             for (let i = 0; i < digi.getSlideEvolucoes().length; i++) {
-                let nome_atual_formatado = digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
-                let nome_slide_formatado = digi.getSlideEvolucoes()[i].toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+                let nome_atual_formatado = formatar_nome(digi.getNome());
+                let nome_slide_formatado = formatar_nome(digi.getSlideEvolucoes()[i]);
                 let seta_nome_formatado = "seta_digimon_" + nome_atual_formatado + "_para_" + nome_slide_formatado;
                 //console.log(coordenadas.left + " " + (coordenadas.left + 620) + " " + coordenadas.top + " " + (coordenadas.top + 110));
 
@@ -595,13 +750,13 @@ function FocarDigimon(Digi) {
 
 
     for (let i = 0; i < resto.length; i++) {
-        let nome_formatado = "digimon_" + resto[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+        let nome_formatado = "digimon_" + formatar_nome(resto[i].getNome());
         const elemento = document.querySelector(`#${nome_formatado}`);
         elemento.style.opacity = "0.1";
         elemento.style.border = "1px solid #ccc"
     }
     for (let i = 0; i < Digi_Pre_e_Evos.length; i++) {
-        let nome_formatado = "digimon_" + Digi_Pre_e_Evos[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+        let nome_formatado = "digimon_" + formatar_nome(Digi_Pre_e_Evos[i].getNome());
         const elemento = document.querySelector(`#${nome_formatado}`);
         elemento.style.opacity = "1";
         elemento.style.border = "1px solid #ccc"
@@ -609,7 +764,7 @@ function FocarDigimon(Digi) {
 
 
 
-    let nome_formatado = "digimon_" + Digi.getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+    let nome_formatado = "digimon_" + formatar_nome(Digi.getNome());
     const elemento = document.querySelector(`#${nome_formatado}`);
     elemento.style.opacity = "1";
     elemento.style.border = "5px solid #8f8f8f"
@@ -640,7 +795,7 @@ function FocarSlides(Digi) {
     let Slide_evos = Digi.getSlideEvolucoesIntern();
 
     for (let i = 0; i < Slide_evos.length; i++) {
-        let nome_formatado = "digimon_" + Slide_evos[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+        let nome_formatado = "digimon_" + formatar_nome(Slide_evos[i].getNome());
         const elemento = document.querySelector(`#${nome_formatado}`);
         elemento.style.opacity = "1";
         elemento.style.border = "1px solid red"
@@ -648,7 +803,7 @@ function FocarSlides(Digi) {
         /*
         let Slide_evos_Evos = Slide_evos[i].getLaterEvolucoes();
         for (let i = 0; i < Slide_evos_Evos.length; i++) {
-            let nome_formatado = "digimon_" + Slide_evos_Evos[i].getNome().toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
+            let nome_formatado = "digimon_" + formatar_nome(Slide_evos_Evos[i].getNome());
             const elemento = document.querySelector(`#${nome_formatado}`);
             elemento.style.opacity = "0.4";
             elemento.style.border = "1px solid red"
