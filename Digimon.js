@@ -136,7 +136,7 @@ export default class Digimon {
             if (nivel !== "Baby 1" && nivel !== "Baby 2" && nivel !== "Child" && nivel !== "Adult" && nivel !== "Perfect" && nivel !== "Ultimate" && nivel !== "Ultimate+" && nivel !== "Ultimate++") {
                 throw new Error("Nível inválido");
             }
-        }        
+        }
         if (nivel !== "Baby 1" && nivel !== "Baby 2" && nivel !== "Child" && nivel !== "Adult" && nivel !== "Perfect" && nivel !== "Ultimate" && nivel !== "Ultimate+" && nivel !== "Ultimate++") {
             throw new Error("Nível inválido");
         }
@@ -374,13 +374,86 @@ export default class Digimon {
     resetEvolucoes() {
         this.#slide_evolucoes = [];
     }
- 
+
 
     resetAllEvolucoes() {
         this.#pre_evolucoes = [];
         this.#evolucoes = [];
         this.#slide_evolucoes
     }
+
+
+    //Deletar instancia
+
+    delete() {
+
+        // Remove referências deste Digimon em outros Digimon
+
+        for (const digimon of Digimon.instancias) {
+            digimon.deleteEvolucao(this);
+            digimon.deletePreEvolucao(this);
+            digimon.deleteSlideEvolucao(this);
+        }
+
+        // Remove da lista geral
+
+        let index = Digimon.instancias.indexOf(this);
+        if (index > -1) {
+            Digimon.instancias.splice(index, 1);
+        }
+
+        // Remove da lista de nível
+
+        switch (this.#nivel) {
+            case "Baby 1":
+                index = Digimon.instancias_lv1.indexOf(this);
+                if (index > -1) Digimon.instancias_lv1.splice(index, 1);
+                break;
+
+            case "Baby 2":
+                index = Digimon.instancias_lv2.indexOf(this);
+                if (index > -1) Digimon.instancias_lv2.splice(index, 1);
+                break;
+
+            case "Child":
+                index = Digimon.instancias_lv3.indexOf(this);
+                if (index > -1) Digimon.instancias_lv3.splice(index, 1);
+                break;
+
+            case "Adult":
+                index = Digimon.instancias_lv4.indexOf(this);
+                if (index > -1) Digimon.instancias_lv4.splice(index, 1);
+                break;
+
+            case "Perfect":
+                index = Digimon.instancias_lv5.indexOf(this);
+                if (index > -1) Digimon.instancias_lv5.splice(index, 1);
+                break;
+
+            case "Ultimate":
+                index = Digimon.instancias_lv6.indexOf(this);
+                if (index > -1) Digimon.instancias_lv6.splice(index, 1);
+                break;
+
+            case "Ultimate+":
+                index = Digimon.instancias_lv7.indexOf(this);
+                if (index > -1) Digimon.instancias_lv7.splice(index, 1);
+                break;
+
+            case "Ultimate++":
+                index = Digimon.instancias_lv8.indexOf(this);
+                if (index > -1) Digimon.instancias_lv8.splice(index, 1);
+                break;
+        }
+
+        // Limpa relações internas
+
+        this.#evolucoes = [];
+        this.#pre_evolucoes = [];
+        this.#slide_evolucoes = [];
+    }
+
+
 
 }
 

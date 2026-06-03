@@ -304,3 +304,16 @@ position: absolute;
 {
     background-color: rgb(255, 210, 210) !important;
 }
+
+
+.Delete_Digimon_Button{
+    background-color: rgb(255, 136, 136);   
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+}
+
+.Delete_Digimon_Button:hover{
+    cursor: pointer;
+    background-color: rgb(255, 210, 210);
+}

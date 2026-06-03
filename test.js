@@ -13,7 +13,7 @@ function main() {
     window.scrollTo(0, 0);
     window.scroll(0, 0);
 
-
+    /*
     const Popomon = new Digimon("Popomon", 1);
     Popomon.setImagem("https://wikimon.net/images/0/06/Popomon.jpg")
     const Punimon = new Digimon("Punimon", 1);
@@ -145,8 +145,8 @@ function main() {
 
     Chaosmon.addEvolucao(Ultimate_Chaosmon);
     Chaosmon_Valdur_Arm.addEvolucao(Ultimate_Chaosmon);
+    */
 
-    
     Start_list();
     Insert_Tab();
 
@@ -169,7 +169,7 @@ function Start_list() {
     exibirDigimonTodos();
     criarSetasTodos();
     Desfocar()
-    
+
 }
 
 function formatar_nome(nome) {
@@ -214,7 +214,23 @@ function Insert_Tab() {
     });
 }
 
-function insert_digimon(){
+function Insert_Tab_Restart() {
+    document.querySelector("#input_name").value = "";
+    document.querySelector("#input_image_link").value = "";
+
+    const selectLevel = document.getElementById('level_select');
+    selectLevel.value = 1;
+    const selectedLevelValue = selectLevel.value;
+
+    levelstabs(selectedLevelValue);
+    const imagePreview = document.getElementById('preview_image');
+    imagePreview.src = "https://wikimon.net/images/6/61/Digimon_noimage.jpg"
+
+
+
+}
+
+function insert_digimon() {
     let nome = document.querySelector("#input_name").value;
     let link_da_imagem = document.querySelector("#input_image_link").value;
     let nivel = document.querySelector("#level_select").value;
@@ -230,19 +246,19 @@ function insert_digimon(){
         alert("Por favor, preencha o link da imagem.");
         return;
     }
-     if (!isValidImageUrl(link_da_imagem)) {
+    if (!isValidImageUrl(link_da_imagem)) {
         alert("Por favor, insira um link de imagem válido.");
         return;
-    } 
-    console.log(`Nome: ${nome}, Link da Imagem: ${link_da_imagem}, Nivel: ${nivel}`);       
-    
+    }
+    console.log(`Nome: ${nome}, Link da Imagem: ${link_da_imagem}, Nivel: ${nivel}`);
+
     let evos = getEvosFromBox("#evos_added");
     let pre_evos = getEvosFromBox("#pre_evos_added");
     let slide_evos = getEvosFromBox("#slides_added");
     console.log("Evoluções: " + evos);
     console.log("Pré-Evoluções: " + pre_evos);
     console.log("Evoluções em Slide: " + slide_evos);
-    
+
     var New_Digimon = new Digimon(nome, parseInt(nivel));
     New_Digimon.setImagem(link_da_imagem);
     for (let index = 0; index < evos.length; index++) {
@@ -255,18 +271,29 @@ function insert_digimon(){
         New_Digimon.addSlideEvolucao(find_digimon(slide_evos[index]));
     }
 
+    const posicaoX = window.scrollX;
+    const posicaoY = window.scrollY;
+
     Start_list()
 
+    window.scrollTo(posicaoX, posicaoY);
+    window.scroll(posicaoX, posicaoY);
+
+    console.log("Digimon adicionado: " + New_Digimon.getNome());
+    alert(`${nome} adicionado com sucesso!`);
+
+    Insert_Tab_Restart();
+    console.log("Reiniciando aba de inserção...");
 }
 
 function getEvosFromBox(box_id) {
     const separador = `<separador></separador></div>`;
     const evos_div = document.querySelector(box_id);
-    
-    let conteudo_formatado = evos_div.innerHTML.replaceAll("\n", "").replaceAll("\t", "").replaceAll(" ", "");
-    
 
-    if (conteudo_formatado  !== ``) {
+    let conteudo_formatado = evos_div.innerHTML.replaceAll("\n", "").replaceAll("\t", "").replaceAll(" ", "");
+
+
+    if (conteudo_formatado !== ``) {
         let evos_separadas = conteudo_formatado.split(separador);
         evos_separadas.pop();
         let evos_separadas_formatadas = evos_separadas.map(evo_html => getNomeSemHtml(evo_html));
@@ -298,7 +325,7 @@ function addEvo(button_id, box_id, select_id) {
 
         if (contemEvo) {
             return;
-        }        
+        }
 
         box.insertAdjacentHTML(
             "beforeend",
@@ -562,7 +589,7 @@ function exibirDigimons(instancias, id) {
                 <div class="nome_center">
                     ${digi.getNome()}<br>
                     <img src="${digi.getImagem()}" alt="${digi.getNome()}"><br>
-                    Nivel: ${digi.getNivel() == "Ultimate+" || digi.getNivel() == "Ultimate++" ? "Ultimate" : digi.getNivel()} 
+                    Nivel: ${digi.getNivel() == "Ultimate+" || digi.getNivel() == "Ultimate++" ? "Ultimate" : digi.getNivel()} <button class="Delete_Digimon_Button" id="delete_${nome_formatado}">X</button>
                 </div>
             </div>
             <div class="evos">
@@ -587,11 +614,61 @@ function exibirDigimons(instancias, id) {
         let coordenadas = elemento.getBoundingClientRect();
         //console.log(`X: ${coordenadas.left}, Y: ${coordenadas.top}`);
 
-        elemento.addEventListener("click", () => {
-            FocarDigimon(digi);
+
+        elemento.addEventListener("click", (evento) => {
+
+            let elemento_clicado = document.querySelector(`#${nome_formatado}`);
+            if (elemento_clicado) {
+                var opacidade = elemento_clicado.style.opacity;
+                if (!opacidade) {
+                    opacidade = 1;
+                }
+                if (opacidade == 1) {
+                    if (!evento.target.closest(`#delete_${nome_formatado}`)) {
+                        FocarDigimon(digi);
+                    }
+                } else {
+                    FocarDigimon(digi);
+                }
+            }
         });
 
+        let botao_deletar = document.querySelector(`#delete_${nome_formatado}`);
+        botao_deletar.addEventListener("click", () => {
+            let elemento_clicado = document.querySelector(`#${nome_formatado}`);
+            
+            var opacidade = elemento_clicado.style.opacity;
+            if (!opacidade){
+                opacidade = 1;
+            }
+            if (opacidade == 1) {
+                var Digi_a_Deletar = find_digimon(digi.getNome());
+                Deletar_Digimon(Digi_a_Deletar);
+            }             
+            
+        });
+        
+        
+        
+
     }
+}
+
+function Deletar_Digimon(Digi) {
+    var resposta = confirm("Deseja realmente deletar " + Digi.getNome() + "? Essa ação não pode ser desfeita.");
+    
+    if (resposta == true) {
+        Digi.delete();
+
+    const posicaoX = window.scrollX;
+    const posicaoY = window.scrollY;
+ 
+    Start_list()
+ 
+    window.scrollTo(posicaoX, posicaoY);
+    window.scroll(posicaoX, posicaoY);
+    }    
+    
 }
 
 function exibirDigimonTodos() {
@@ -735,6 +812,8 @@ function angulo(x1, y1, x2, y2) {
 }
 
 function FocarDigimon(Digi) {
+
+
     //console.log("Focando no Digimon: " + Digi.getNome());
     let Digi_Evolucoes = Digi.getLaterEvolucoes();
     //console.log("Evoluções: " + Digi_Evolucoes.map(evolucao => evolucao.getNome()));
@@ -880,6 +959,12 @@ function Desfocar() {
         if (evento.target.closest(".Insert_Template")) {
             return;
         }
+
+        /*
+        if (evento.target.closest(".Delete_Digimon_Button")) {
+            return;
+        }
+        */
 
         const clicouDentro = evento.target.closest(".digimon_template");
 
