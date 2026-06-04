@@ -177,12 +177,22 @@ function formatar_nome(nome) {
     return nome_formatado;
 }
 
+function formatar_nome_simples(nome) {
+    let nome_formatado = nome.toLowerCase()
+        .replace(/\s+/g, " ");
+    return nome_formatado;
+}
+
 function find_digimon(nome) {
+    console.log("Procurar Passo 1 - Procurando Digimon: " + nome);
     for (let i = 0; i < Digimon.instancias.length; i++) {
-        if (formatar_nome(Digimon.instancias[i].getNome()) === formatar_nome(nome)) {
+        console.log(`Procurar Passo 2.${i + 1} - Verificando Digimon: ${Digimon.instancias[i].getNome()}`);
+        if (formatar_nome_simples(Digimon.instancias[i].getNome()) === formatar_nome_simples(nome)) {
+            console.log("Digimon encontrado: " + Digimon.instancias[i].getNome());
             return Digimon.instancias[i];
         }
     }
+    console.log("Digimon não encontrado: " + nome);
     return null;
 }
 
@@ -231,7 +241,11 @@ function Insert_Tab_Restart() {
 }
 
 function insert_digimon() {
-    let nome = document.querySelector("#input_name").value;
+    console.log("");
+    console.log(" --- ");
+    console.log("");
+    console.log("Passo 0 - Iniciando processo de inserção de Digimon, verificando dados...");
+    let nome = Tirar_tracos(document.querySelector("#input_name").value);
     let link_da_imagem = document.querySelector("#input_image_link").value;
     let nivel = document.querySelector("#level_select").value;
     if (nome == "") {
@@ -250,6 +264,7 @@ function insert_digimon() {
         alert("Por favor, insira um link de imagem válido.");
         return;
     }
+    
     console.log(`Nome: ${nome}, Link da Imagem: ${link_da_imagem}, Nivel: ${nivel}`);
 
     let evos = getEvosFromBox("#evos_added");
@@ -259,22 +274,33 @@ function insert_digimon() {
     console.log("Pré-Evoluções: " + pre_evos);
     console.log("Evoluções em Slide: " + slide_evos);
 
+    console.log("Passo 1 - Criando novo Digimon...");    
     var New_Digimon = new Digimon(nome, parseInt(nivel));
+    console.log("Passo 2 - Digimon novo criado, agora configurando imagem...");    
     New_Digimon.setImagem(link_da_imagem);
+    console.log("Passo 3 - Imagem configurada, agora adicionando evoluções...");
     for (let index = 0; index < evos.length; index++) {
+        console.log(`Passo 4.${index + 1} - Adicionando evolução: ${evos[index]}`);
         New_Digimon.addEvolucao(find_digimon(evos[index]));
     }
     for (let index = 0; index < pre_evos.length; index++) {
+        console.log(`Passo 5.${index + 1} - Adicionando pré-evolução: ${pre_evos[index]}`);
         New_Digimon.addPreEvolucao(find_digimon(pre_evos[index]));
     }
     for (let index = 0; index < slide_evos.length; index++) {
+        console.log(`Passo 6.${index + 1} - Adicionando evolução em slide: ${slide_evos[index]}`);
         New_Digimon.addSlideEvolucao(find_digimon(slide_evos[index]));
     }
+    console.log("Passo 7 - Evoluções adicionadas, agora salvando coordenadas...");
 
     const posicaoX = window.scrollX;
     const posicaoY = window.scrollY;
 
+    console.log("Passo 8 - Coordenadas salvas, agora reiniciando lista para exibir novo Digimon...");
+
     Start_list()
+
+    console.log("Passo 9 - Lista reiniciada, agora retornando para posição anterior...");
 
     window.scrollTo(posicaoX, posicaoY);
     window.scroll(posicaoX, posicaoY);
@@ -290,14 +316,21 @@ function getEvosFromBox(box_id) {
     const separador = `<separador></separador></div>`;
     const evos_div = document.querySelector(box_id);
 
-    let conteudo_formatado = evos_div.innerHTML.replaceAll("\n", "").replaceAll("\t", "").replaceAll(" ", "");
-
+    //let conteudo_formatado = evos_div.innerHTML.replaceAll("\n", "").replaceAll("\t", "").replaceAll(" ", "");
+    let conteudo_formatado = evos_div.innerHTML.replaceAll("\n", "").replaceAll("\t", "");
 
     if (conteudo_formatado !== ``) {
-        let evos_separadas = conteudo_formatado.split(separador);
+        var evos_separadas = conteudo_formatado.split(separador);
         evos_separadas.pop();
-        let evos_separadas_formatadas = evos_separadas.map(evo_html => getNomeSemHtml(evo_html));
-        evos_separadas_formatadas = evos_separadas_formatadas.filter(evo => evo !== null);
+        var evos_separadas_formatadas = evos_separadas.map(evo_html => getNomeSemHtml(evo_html));
+        console.log("______")
+        console.log("Evos separadas: " + evos_separadas_formatadas);        
+        evos_separadas_formatadas = evos_separadas_formatadas.filter(evo => evo !== null);        
+        for (let index = 0; index < evos_separadas_formatadas.length; index++) {
+            evos_separadas_formatadas[index] = Tirar_tracos(evos_separadas_formatadas[index]);
+            console.log(`Evo formatada ${index + 1}: ${evos_separadas_formatadas[index]}`);
+        }
+        console.log("Evos separadas sem traco: " + evos_separadas_formatadas);
         return evos_separadas_formatadas;
     } else {
         return [];
@@ -309,32 +342,72 @@ function getNomeSemHtml(html) {
     return match ? match[1].trim() : null;
 }
 
-function addEvo(button_id, box_id, select_id) {
+function Tirar_tracos(nome){
+    return nome.replace(/\s*[-–—]\s*/g, "")   // remove qualquer tipo de traço com espaços ao redor
+        .trim();
+}
+
+function addEvo(button_id, box_id, select_id) {    
+    console.log(`Step 0.1 - Adicionando evento de clique para o botão: ${button_id}`);
     let botao = document.querySelector(button_id);
+    console.log(`Step 0.2 - Adicionando o event listener`);
     botao.addEventListener("click", () => {
+        console.log(" *** ")
+        console.log(`Step 1 - Pegando a query select`);
         let select = document.querySelector(select_id);
+        console.log(`Step 2 - Pegando a box de evoluções adicionadas`);
         let box = document.querySelector(box_id);
 
+        console.log(`Step 3 - Verificando se algo foi selecionado`);
         if (select.value == "") {
+            console.log(`Step 3.1 - Nada selecionado`);
             return;
         }
 
-        let nome_formatado = formatar_nome(select.value);
+        console.log(`Step 3.2 - Algo foi selecionado: ${select.value}`);
 
-        const contemEvo = box.innerHTML.includes(nome_formatado);
+        console.log(`Step 4 - Formatando o nome para comparação`);
+        let nome_formatado = formatar_nome_simples(select.value);
+        
 
-        if (contemEvo) {
+        console.log(`Step 4.1 - Nome formatado: ${nome_formatado}`);
+
+        console.log(`Step 5 - Verificando se a evolução já foi adicionada`);
+        
+
+
+        //
+
+        //const contemEvo = box.innerHTML.includes(nome_formatado);
+        let nome_para_teste = `- ${nome_formatado} -`;
+        const regex = new RegExp(`\\b${nome_para_teste}\\b`, 'i');
+
+        
+
+        
+
+        if (regex.test(box.innerHTML)) {
+            console.log(`Step 5.1 - Evolução já adicionada: ${nome_formatado}`);
             return;
         }
+
+        //
+        console.log(`Step 5.2 - Evolução ainda não adicionada, prosseguindo...`);
+
+        console.log(`Step 6 - Adicionando evolução na box...`);
+
+        let nome_formatado_para_classes = formatar_nome(select.value);
 
         box.insertAdjacentHTML(
             "beforeend",
-            `<div id="added_${nome_formatado}">
-                ${select.value} <button class="delete_evo_button" id="delete_evo_${nome_formatado}">X</button>
+            `<div id="added_${nome_formatado_para_classes}">
+                - ${select.value} - <button class="delete_evo_button" id="delete_evo_${nome_formatado_para_classes}">X</button>
         <separador></separador></div>`
         );
-
-        addDeleteButton(nome_formatado);
+        console.log(`Step 6.ok - Evolução adicionada: ${nome_formatado}`);
+        console.log(`Step 7 - Adicionando botão de exclusão para: ${nome_formatado}`);
+        addDeleteButton(nome_formatado_para_classes);
+        console.log(`Tudo adicionado com sucesso`);
     });
 }
 
@@ -367,7 +440,7 @@ function levelstabs(level_number) {
 
     switch (level_number) {
         case "1":
-            console.log("level: 1");
+            //console.log("level: 1");
 
             for (let index = 0; index < Digimon.instancias_lv2.length; index++) {
                 evo.innerHTML += `<option value="${Digimon.instancias_lv2[index].getNome()}">${Digimon.instancias_lv2[index].getNome()}</option>`;
@@ -379,7 +452,7 @@ function levelstabs(level_number) {
 
             break;
         case "2":
-            console.log("level: 2");
+            //console.log("level: 2");
 
             for (let index = 0; index < Digimon.instancias_lv3.length; index++) {
                 evo.innerHTML += `<option value="${Digimon.instancias_lv3[index].getNome()}">${Digimon.instancias_lv3[index].getNome()}</option>`;
@@ -395,7 +468,7 @@ function levelstabs(level_number) {
 
             break;
         case "3":
-            console.log("level: 3");
+            //console.log("level: 3");
 
             for (let index = 0; index < Digimon.instancias_lv4.length; index++) {
                 evo.innerHTML += `<option value="${Digimon.instancias_lv4[index].getNome()}">${Digimon.instancias_lv4[index].getNome()}</option>`;
@@ -411,7 +484,7 @@ function levelstabs(level_number) {
 
             break;
         case "4":
-            console.log("level: 4");
+            //console.log("level: 4");
 
             for (let index = 0; index < Digimon.instancias_lv5.length; index++) {
                 evo.innerHTML += `<option value="${Digimon.instancias_lv5[index].getNome()}">${Digimon.instancias_lv5[index].getNome()}</option>`;
@@ -426,7 +499,7 @@ function levelstabs(level_number) {
             }
             break;
         case "5":
-            console.log("level: 5");
+            //console.log("level: 5");
 
             for (let index = 0; index < Digimon.instancias_lv6.length; index++) {
                 evo.innerHTML += `<option value="${Digimon.instancias_lv6[index].getNome()}">${Digimon.instancias_lv6[index].getNome()}</option>`;
@@ -442,7 +515,7 @@ function levelstabs(level_number) {
 
             break;
         case "6":
-            console.log("level: 6");
+            //console.log("level: 6");
 
             for (let index = 0; index < Digimon.instancias_lv7.length; index++) {
                 evo.innerHTML += `<option value="${Digimon.instancias_lv7[index].getNome()}">${Digimon.instancias_lv7[index].getNome()}</option>`;
@@ -458,7 +531,7 @@ function levelstabs(level_number) {
 
             break;
         case "7":
-            console.log("level: 7");
+            //console.log("level: 7");
 
             for (let index = 0; index < Digimon.instancias_lv8.length; index++) {
                 evo.innerHTML += `<option value="${Digimon.instancias_lv8[index].getNome()}">${Digimon.instancias_lv8[index].getNome()}</option>`;
@@ -474,7 +547,7 @@ function levelstabs(level_number) {
 
             break;
         case "8":
-            console.log("level: 8");
+            //console.log("level: 8");
 
             for (let index = 0; index < Digimon.instancias_lv7.length; index++) {
                 pre_evo.innerHTML += `<option value="${Digimon.instancias_lv7[index].getNome()}">${Digimon.instancias_lv7[index].getNome()}</option>`;
