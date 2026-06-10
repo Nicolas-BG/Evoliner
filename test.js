@@ -149,11 +149,108 @@ function main() {
 
     Start_list();
     Insert_Tab();
+    Save_event()
+    Load_Event()
 
 
 }
 
 main();
+
+function Save_event() {
+    let botao = document.querySelector(`#save_button`);
+    botao.addEventListener("click", () => {
+        Save_JSON();
+    });
+}
+
+function Save_JSON() {
+    var resposta = confirm("Deseja realmente Salvar a lista de digimons?");
+    
+    const input_archivo_nome = document.querySelector("#archive_name");
+    var nome_archivo = input_archivo_nome.value.trim();
+    if (nome_archivo == "") {
+        nome_archivo = "Digimon.json";
+    } else {
+        nome_archivo = nome_archivo.replace(".json", "");
+        nome_archivo = nome_archivo + ".json";
+        nome_archivo = nome_archivo.replaceAll(/[\\/:*?"<>|]/g, '');
+    }
+
+
+    if (resposta == true) {
+
+        var all_intancias = [...Digimon.instancias_lv1, ...Digimon.instancias_lv2, ...Digimon.instancias_lv3, ...Digimon.instancias_lv4, ...Digimon.instancias_lv5, ...Digimon.instancias_lv6, ...Digimon.instancias_lv7, ...Digimon.instancias_lv8];
+        var digimons_para_json = all_intancias.map(digimon => {
+            return {
+                nome: digimon.getNome(),
+                imagem: digimon.getImagem(),
+                nivel: digimon.getNivel(),
+                pre_evolucoes: [digimon.getPreEvolucoes()],
+                evolucoes: [digimon.getEvolucoes()],
+                slide_evolucoes: [digimon.getSlideEvolucoes()]
+            };
+        });
+
+        const dadosBlob = new Blob([JSON.stringify(digimons_para_json, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(dadosBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = nome_archivo;
+        link.click();
+
+        URL.revokeObjectURL(url);
+
+        input_archivo_nome.value = "";
+    }
+    
+}
+
+function Load_Event() { 
+    let botao = document.querySelector(`#load_button`);
+    const arquivoInput = document.querySelector(`#Archivo_Digi`);
+
+    botao.addEventListener("click", () => {
+        arquivoInput.click();
+    });
+
+    arquivoInput.addEventListener('change', (evento) => {
+        const arquivo = evento.target.files[0];
+
+        if (arquivo) {
+            //console.log('Arquivo selecionado:', arquivo.name);
+            Load_JSON(arquivo);
+        }
+    });
+}
+
+async function Load_JSON(arquivo) {
+    let conteudo = await arquivo.text();
+    let dados = JSON.parse(conteudo);
+
+    //console.log(dados);
+
+    for (let i = 0; i < dados.length; i++) {
+        var New_Digimon = new Digimon(dados[i].nome, dados[i].nivel);
+        New_Digimon.setImagem(dados[i].imagem);
+        for (let j = 0; j < dados[i].pre_evolucoes[0].length; j++) {
+            New_Digimon.addPreEvolucao(find_digimon(dados[i].pre_evolucoes[0][j]));
+        }
+    }
+
+    for (let i = 0; i < dados.length; i++) {
+        var digimon_atual = find_digimon(dados[i].nome);
+        for (let j = 0; j < dados[i].slide_evolucoes[0].length; j++) {
+            var Slide_evo = find_digimon(dados[i].slide_evolucoes[0][j])
+            if (!digimon_atual.getSlideEvolucoesIntern().includes(Slide_evo)) {
+                digimon_atual.addSlideEvolucao(Slide_evo);
+            }            
+        }
+    }
+
+
+    Start_list_restart()
+}
 
 function Start_list() {
     document.getElementById("lv1").innerHTML = "";
@@ -172,6 +269,16 @@ function Start_list() {
 
 }
 
+function Start_list_restart() {
+    const posicaoX = window.scrollX;
+    const posicaoY = window.scrollY;
+
+    Start_list()
+
+    window.scrollTo(posicaoX, posicaoY);
+    window.scroll(posicaoX, posicaoY);
+}
+
 function formatar_nome(nome) {
     let nome_formatado = nome.toLowerCase().replace(/\s/g, "_").replace(/[\(\)]/g, "");
     return nome_formatado;
@@ -184,15 +291,15 @@ function formatar_nome_simples(nome) {
 }
 
 function find_digimon(nome) {
-    console.log("Procurar Passo 1 - Procurando Digimon: " + nome);
+    //console.log("Procurar Passo 1 - Procurando Digimon: " + nome);
     for (let i = 0; i < Digimon.instancias.length; i++) {
-        console.log(`Procurar Passo 2.${i + 1} - Verificando Digimon: ${Digimon.instancias[i].getNome()}`);
+        //console.log(`Procurar Passo 2.${i + 1} - Verificando Digimon: ${Digimon.instancias[i].getNome()}`);
         if (formatar_nome_simples(Digimon.instancias[i].getNome()) === formatar_nome_simples(nome)) {
-            console.log("Digimon encontrado: " + Digimon.instancias[i].getNome());
+            //console.log("Digimon encontrado: " + Digimon.instancias[i].getNome());
             return Digimon.instancias[i];
         }
     }
-    console.log("Digimon não encontrado: " + nome);
+    //console.log("Digimon não encontrado: " + nome);
     return null;
 }
 
@@ -241,10 +348,10 @@ function Insert_Tab_Restart() {
 }
 
 function insert_digimon() {
-    console.log("");
-    console.log(" --- ");
-    console.log("");
-    console.log("Passo 0 - Iniciando processo de inserção de Digimon, verificando dados...");
+    //console.log("");
+    //console.log(" --- ");
+    //console.log("");
+    //console.log("Passo 0 - Iniciando processo de inserção de Digimon, verificando dados...");
     let nome = Tirar_tracos(document.querySelector("#input_name").value);
     let link_da_imagem = document.querySelector("#input_image_link").value;
     let nivel = document.querySelector("#level_select").value;
@@ -264,52 +371,46 @@ function insert_digimon() {
         alert("Por favor, insira um link de imagem válido.");
         return;
     }
-    
-    console.log(`Nome: ${nome}, Link da Imagem: ${link_da_imagem}, Nivel: ${nivel}`);
+    //console.log(`Nome: ${nome}, Link da Imagem: ${link_da_imagem}, Nivel: ${nivel}`);
+    //console.log(`Nome: ${nome}, Link da Imagem: ${link_da_imagem}, Nivel: ${nivel}`);
 
     let evos = getEvosFromBox("#evos_added");
     let pre_evos = getEvosFromBox("#pre_evos_added");
     let slide_evos = getEvosFromBox("#slides_added");
-    console.log("Evoluções: " + evos);
-    console.log("Pré-Evoluções: " + pre_evos);
-    console.log("Evoluções em Slide: " + slide_evos);
+    //console.log("Evoluções: " + evos);
+    //console.log("Pré-Evoluções: " + pre_evos);
+    //console.log("Evoluções em Slide: " + slide_evos);
 
-    console.log("Passo 1 - Criando novo Digimon...");    
+    //console.log("Passo 1 - Criando novo Digimon...");    
     var New_Digimon = new Digimon(nome, parseInt(nivel));
-    console.log("Passo 2 - Digimon novo criado, agora configurando imagem...");    
+    //console.log("Passo 2 - Digimon novo criado, agora configurando imagem...");    
     New_Digimon.setImagem(link_da_imagem);
-    console.log("Passo 3 - Imagem configurada, agora adicionando evoluções...");
+    //console.log("Passo 3 - Imagem configurada, agora adicionando evoluções...");
     for (let index = 0; index < evos.length; index++) {
-        console.log(`Passo 4.${index + 1} - Adicionando evolução: ${evos[index]}`);
+        //console.log(`Passo 4.${index + 1} - Adicionando evolução: ${evos[index]}`);
         New_Digimon.addEvolucao(find_digimon(evos[index]));
     }
     for (let index = 0; index < pre_evos.length; index++) {
-        console.log(`Passo 5.${index + 1} - Adicionando pré-evolução: ${pre_evos[index]}`);
+        //console.log(`Passo 5.${index + 1} - Adicionando pré-evolução: ${pre_evos[index]}`);
         New_Digimon.addPreEvolucao(find_digimon(pre_evos[index]));
     }
     for (let index = 0; index < slide_evos.length; index++) {
-        console.log(`Passo 6.${index + 1} - Adicionando evolução em slide: ${slide_evos[index]}`);
+        //console.log(`Passo 6.${index + 1} - Adicionando evolução em slide: ${slide_evos[index]}`);
         New_Digimon.addSlideEvolucao(find_digimon(slide_evos[index]));
     }
-    console.log("Passo 7 - Evoluções adicionadas, agora salvando coordenadas...");
+    //console.log("Passo 7 - Evoluções adicionadas, agora salvando coordenadas...");
 
-    const posicaoX = window.scrollX;
-    const posicaoY = window.scrollY;
 
-    console.log("Passo 8 - Coordenadas salvas, agora reiniciando lista para exibir novo Digimon...");
 
-    Start_list()
+    Start_list_restart()
 
-    console.log("Passo 9 - Lista reiniciada, agora retornando para posição anterior...");
 
-    window.scrollTo(posicaoX, posicaoY);
-    window.scroll(posicaoX, posicaoY);
 
-    console.log("Digimon adicionado: " + New_Digimon.getNome());
+    //console.log("Digimon adicionado: " + New_Digimon.getNome());
     alert(`${nome} adicionado com sucesso!`);
 
     Insert_Tab_Restart();
-    console.log("Reiniciando aba de inserção...");
+    //console.log("Reiniciando aba de inserção...");
 }
 
 function getEvosFromBox(box_id) {
@@ -323,14 +424,14 @@ function getEvosFromBox(box_id) {
         var evos_separadas = conteudo_formatado.split(separador);
         evos_separadas.pop();
         var evos_separadas_formatadas = evos_separadas.map(evo_html => getNomeSemHtml(evo_html));
-        console.log("______")
-        console.log("Evos separadas: " + evos_separadas_formatadas);        
-        evos_separadas_formatadas = evos_separadas_formatadas.filter(evo => evo !== null);        
+        //console.log("______")
+        //console.log("Evos separadas: " + evos_separadas_formatadas);        
+        evos_separadas_formatadas = evos_separadas_formatadas.filter(evo => evo !== null);
         for (let index = 0; index < evos_separadas_formatadas.length; index++) {
             evos_separadas_formatadas[index] = Tirar_tracos(evos_separadas_formatadas[index]);
-            console.log(`Evo formatada ${index + 1}: ${evos_separadas_formatadas[index]}`);
+            //console.log(`Evo formatada ${index + 1}: ${evos_separadas_formatadas[index]}`);
         }
-        console.log("Evos separadas sem traco: " + evos_separadas_formatadas);
+        //console.log("Evos separadas sem traco: " + evos_separadas_formatadas);
         return evos_separadas_formatadas;
     } else {
         return [];
@@ -342,38 +443,38 @@ function getNomeSemHtml(html) {
     return match ? match[1].trim() : null;
 }
 
-function Tirar_tracos(nome){
+function Tirar_tracos(nome) {
     return nome.replace(/\s*[-–—]\s*/g, "")   // remove qualquer tipo de traço com espaços ao redor
         .trim();
 }
 
-function addEvo(button_id, box_id, select_id) {    
-    console.log(`Step 0.1 - Adicionando evento de clique para o botão: ${button_id}`);
+function addEvo(button_id, box_id, select_id) {
+    //console.log(`Step 0.1 - Adicionando evento de clique para o botão: ${button_id}`);
     let botao = document.querySelector(button_id);
-    console.log(`Step 0.2 - Adicionando o event listener`);
+    //console.log(`Step 0.2 - Adicionando o event listener`);
     botao.addEventListener("click", () => {
-        console.log(" *** ")
-        console.log(`Step 1 - Pegando a query select`);
+        //console.log(" *** ")
+        //console.log(`Step 1 - Pegando a query select`);
         let select = document.querySelector(select_id);
-        console.log(`Step 2 - Pegando a box de evoluções adicionadas`);
+        //console.log(`Step 2 - Pegando a box de evoluções adicionadas`);
         let box = document.querySelector(box_id);
 
-        console.log(`Step 3 - Verificando se algo foi selecionado`);
+        //console.log(`Step 3 - Verificando se algo foi selecionado`);
         if (select.value == "") {
-            console.log(`Step 3.1 - Nada selecionado`);
+            //console.log(`Step 3.1 - Nada selecionado`);
             return;
         }
 
-        console.log(`Step 3.2 - Algo foi selecionado: ${select.value}`);
+        //console.log(`Step 3.2 - Algo foi selecionado: ${select.value}`);
 
-        console.log(`Step 4 - Formatando o nome para comparação`);
+        //console.log(`Step 4 - Formatando o nome para comparação`);
         let nome_formatado = formatar_nome_simples(select.value);
-        
 
-        console.log(`Step 4.1 - Nome formatado: ${nome_formatado}`);
 
-        console.log(`Step 5 - Verificando se a evolução já foi adicionada`);
-        
+        //console.log(`Step 4.1 - Nome formatado: ${nome_formatado}`);
+
+        //console.log(`Step 5 - Verificando se a evolução já foi adicionada`);
+
 
 
         //
@@ -382,19 +483,19 @@ function addEvo(button_id, box_id, select_id) {
         let nome_para_teste = `- ${nome_formatado} -`;
         const regex = new RegExp(`\\b${nome_para_teste}\\b`, 'i');
 
-        
 
-        
+
+
 
         if (regex.test(box.innerHTML)) {
-            console.log(`Step 5.1 - Evolução já adicionada: ${nome_formatado}`);
+            //console.log(`Step 5.1 - Evolução já adicionada: ${nome_formatado}`);
             return;
         }
 
-        //
-        console.log(`Step 5.2 - Evolução ainda não adicionada, prosseguindo...`);
 
-        console.log(`Step 6 - Adicionando evolução na box...`);
+        //console.log(`Step 5.2 - Evolução ainda não adicionada, prosseguindo...`);
+
+        //console.log(`Step 6 - Adicionando evolução na box...`);
 
         let nome_formatado_para_classes = formatar_nome(select.value);
 
@@ -404,10 +505,10 @@ function addEvo(button_id, box_id, select_id) {
                 - ${select.value} - <button class="delete_evo_button" id="delete_evo_${nome_formatado_para_classes}">X</button>
         <separador></separador></div>`
         );
-        console.log(`Step 6.ok - Evolução adicionada: ${nome_formatado}`);
-        console.log(`Step 7 - Adicionando botão de exclusão para: ${nome_formatado}`);
+        //console.log(`Step 6.ok - Evolução adicionada: ${nome_formatado}`);
+        //console.log(`Step 7 - Adicionando botão de exclusão para: ${nome_formatado}`);
         addDeleteButton(nome_formatado_para_classes);
-        console.log(`Tudo adicionado com sucesso`);
+        //console.log(`Tudo adicionado com sucesso`);
     });
 }
 
@@ -559,7 +660,7 @@ function levelstabs(level_number) {
 
             break;
         default:
-            console.log("Erro");
+        //console.log("Erro");
     }
 
 
@@ -709,39 +810,35 @@ function exibirDigimons(instancias, id) {
         let botao_deletar = document.querySelector(`#delete_${nome_formatado}`);
         botao_deletar.addEventListener("click", () => {
             let elemento_clicado = document.querySelector(`#${nome_formatado}`);
-            
+
             var opacidade = elemento_clicado.style.opacity;
-            if (!opacidade){
+            if (!opacidade) {
                 opacidade = 1;
             }
             if (opacidade == 1) {
                 var Digi_a_Deletar = find_digimon(digi.getNome());
                 Deletar_Digimon(Digi_a_Deletar);
-            }             
-            
+            }
+
         });
-        
-        
-        
+
+
+
 
     }
 }
 
 function Deletar_Digimon(Digi) {
     var resposta = confirm("Deseja realmente deletar " + Digi.getNome() + "? Essa ação não pode ser desfeita.");
-    
+
     if (resposta == true) {
         Digi.delete();
 
-    const posicaoX = window.scrollX;
-    const posicaoY = window.scrollY;
- 
-    Start_list()
- 
-    window.scrollTo(posicaoX, posicaoY);
-    window.scroll(posicaoX, posicaoY);
-    }    
-    
+
+        Start_list_restart()
+
+    }
+
 }
 
 function exibirDigimonTodos() {
