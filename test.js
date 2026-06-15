@@ -13,145 +13,14 @@ function main() {
     window.scrollTo(0, 0);
     window.scroll(0, 0);
 
-    /*
-    const Popomon = new Digimon("Popomon", 1);
-    Popomon.setImagem("https://wikimon.net/images/0/06/Popomon.jpg")
-    const Punimon = new Digimon("Punimon", 1);
-    Punimon.setImagem("https://wikimon.net/images/a/a0/Punimon.jpg")
-    const Puttimon = new Digimon("Puttimon", 1);
-    Puttimon.setImagem("https://wikimon.net/images/c/c4/Puttimon.jpg")
-
-    const Frimon = new Digimon("Frimon", 2);
-    Frimon.setImagem("https://wikimon.net/images/b/b8/Frimon.jpg");
-    const Tsunomon = new Digimon("Tsunomon", 2);
-    Tsunomon.setImagem("https://wikimon.net/images/5/59/Tunomon.jpg");
-    const Cupimon = new Digimon("Cupimon", 2);
-    Cupimon.setImagem("https://wikimon.net/images/0/06/Cupimon.jpg");
-
-    const Liollmon = new Digimon("Liollmon", 3);
-    Liollmon.setImagem("https://wikimon.net/images/7/7f/Liollmon.jpg");
-    const Elecmon = new Digimon("Elecmon", 3);
-    Elecmon.setImagem("https://wikimon.net/images/d/dc/Elecmon.jpg");
-    const Lucemon = new Digimon("Lucemon", 3);
-    Lucemon.setImagem("https://wikimon.net/images/e/e7/Lucemon2.jpg");
-
-
-    const Leomon = new Digimon("Leomon", 4);
-    Leomon.setImagem("https://wikimon.net/images/6/68/Leomon.jpg");
-    const Liamon = new Digimon("Liamon", 4);
-    Liamon.setImagem("https://wikimon.net/images/7/71/Liamon.jpg");
-    const Cougarmon = new Digimon("Cougarmon", 4);
-    Cougarmon.setImagem("https://wikimon.net/images/b/bc/Cougarmon.jpg");
-    const Lowemon = new Digimon("Lowemon", 4);
-    Lowemon.setImagem("https://wikimon.net/images/f/f7/Lowemon2.jpg");
-    const Aegiomon = new Digimon("Aegiomon", 4);
-    Aegiomon.setImagem("https://wikimon.net/images/9/98/Aegiomon2.jpg");
-
-    const Panjyamon = new Digimon("Panjyamon", 5);
-    Panjyamon.setImagem("https://wikimon.net/images/8/80/Panjyamon.jpg");
-    const Grappuleomon = new Digimon("Grappuleomon", 5);
-    Grappuleomon.setImagem("https://wikimon.net/images/4/41/Grappuleomon.jpg");
-    const Loaderleomon = new Digimon("Loaderleomon", 5);
-    Loaderleomon.setImagem("https://wikimon.net/images/8/88/Loaderliomon.jpg");
-    const Murasamemon = new Digimon("Murasamemon", 5);
-    Murasamemon.setImagem("https://wikimon.net/images/9/99/Murasamemon.jpg");
-    const Kaiserleomon = new Digimon("Kaiserleomon", 5);
-    Kaiserleomon.setImagem("https://wikimon.net/images/3/35/Kaiserleomon.jpg");
-    const Aegiochusmon = new Digimon("Aegiochusmon", 5);
-    Aegiochusmon.setImagem("https://wikimon.net/images/b/bd/Aegiochusmon.jpg");
-    const Aegiochusmon_Blue = new Digimon("Aegiochusmon B", 5);
-    Aegiochusmon_Blue.setImagem("https://wikimon.net/images/0/08/Aegiochusmon_blue.jpg");
-    const Aegiochusmon_Green = new Digimon("Aegiochusmon G", 5);
-    Aegiochusmon_Green.setImagem("https://wikimon.net/images/d/d4/Aegiochusmon_green.jpg");
-    const Aegiochusmon_Holy = new Digimon("Aegiochusmon H", 5);
-    Aegiochusmon_Holy.setImagem("https://wikimon.net/images/5/51/Aegiochusmon_holy.jpg");
-    const Aegiochusmon_Dark = new Digimon("Aegiochusmon D", 5);
-    Aegiochusmon_Dark.setImagem("https://wikimon.net/images/7/7a/Aegiochusmon_dark.jpg");
-    const Lucemon_Falldown_Mode = new Digimon("Lucemon FM", 5);
-    Lucemon_Falldown_Mode.setImagem("https://wikimon.net/images/7/76/Lucemon_falldown.jpg");
-
-    const Regulumon = new Digimon("Regulumon", 6);
-    Regulumon.setImagem("https://wikimon.net/images/f/f1/Regulumon.jpg");
-    const Saberleomon = new Digimon("Saberleomon", 6);
-    Saberleomon.setImagem("https://wikimon.net/images/e/e2/Saberleomon.jpg");
-    const Dinotigermon = new Digimon("Dinotigermon", 6);
-    Dinotigermon.setImagem("https://wikimon.net/images/thumb/3/34/Dinotigermon.jpg/600px-Dinotigermon.jpg");
-    const Heavyleomon = new Digimon("Heavyleomon", 6);
-    Heavyleomon.setImagem("https://wikimon.net/images/9/9d/Heavyleomon.jpg");
-    const Bancholeomon = new Digimon("Bancholeomon", 6);
-    Bancholeomon.setImagem("https://wikimon.net/images/8/8f/Bancholeomon.jpg");
-    const Habakirimon = new Digimon("Habakirimon", 6);
-    Habakirimon.setImagem("https://wikimon.net/images/a/a8/Dcg-ST23-05.jpg");
-    const Ancientsphinxmon = new Digimon("Ancientsphinxmon", 6);
-    Ancientsphinxmon.setImagem("https://wikimon.net/images/8/84/Ancientsphinxmon.jpg");
-    const Jupitermon = new Digimon("Jupitermon", 6);
-    Jupitermon.setImagem("https://wikimon.net/images/e/e0/Jupitermon.jpg");
-    const Lucemon_Satan_Mode = new Digimon("Lucemon SM", 6);
-    Lucemon_Satan_Mode.setImagem("https://wikimon.net/images/f/f6/Lucemon_satan2.jpg");
-
-    const Tlalocmon = new Digimon("Tlalocmon", 7);
-    Tlalocmon.setImagem("https://wikimon.net/images/8/8c/Tlalocmon.jpg");
-    const Bancholeomon_Burst_Mode = new Digimon("Bancholeomon BM", 7);
-    Bancholeomon_Burst_Mode.setImagem("https://wikimon.net/images/7/76/DS46_Bancholeomon_burst.jpg");
-    const Chaosmon = new Digimon("Chaosmon", 7);
-    Chaosmon.setImagem("https://wikimon.net/images/thumb/9/93/Chaosmon.jpg/600px-Chaosmon.jpg");
-    const Chaosmon_Valdur_Arm = new Digimon("Chaosmon VA", 7);
-    Chaosmon_Valdur_Arm.setImagem("https://wikimon.net/images/a/a3/Chaosmon_valdurarm.jpg");
-    const Jupitermon_Wrath_Mode = new Digimon("Jupitermon WM", 7);
-    Jupitermon_Wrath_Mode.setImagem("https://wikimon.net/images/1/1f/Jupitermon_wrath.jpg");
-
-    const Ultimate_Chaosmon = new Digimon("Ultimatechaosmon", 8);
-    Ultimate_Chaosmon.setImagem("https://wikimon.net/images/c/cc/Ultimatechaosmon.jpg");
-
-
-    Popomon.addEvolucao(Frimon);
-    Punimon.addEvolucao(Tsunomon);
-    Puttimon.addEvolucao(Cupimon);
-
-
-    Frimon.addEvolucao(Liollmon);
-    Tsunomon.addEvolucao(Elecmon);
-    Cupimon.addEvolucao(Lucemon);
-
-
-    Liollmon.addMultiEvolucao([Leomon, Liamon, Cougarmon, Lowemon]);
-    Elecmon.addMultiEvolucao([Aegiomon, Leomon])
-    Lucemon.addEvolucao(Lucemon_Falldown_Mode);
-
-    Leomon.addMultiEvolucao([Panjyamon, Grappuleomon]);
-    Leomon.addSlideEvolucao(Lowemon);
-    Liamon.addEvolucao(Loaderleomon);
-    Cougarmon.addEvolucao(Murasamemon);
-    Lowemon.addEvolucao(Kaiserleomon);
-    Aegiomon.addMultiEvolucao([Aegiochusmon, Aegiochusmon_Blue, Aegiochusmon_Green, Aegiochusmon_Holy, Aegiochusmon_Dark]);
-
-    Panjyamon.addMultiEvolucao([Regulumon, Saberleomon]);
-    Grappuleomon.addMultiEvolucao([Saberleomon, Heavyleomon, Bancholeomon]);
-    Loaderleomon.addMultiEvolucao([Heavyleomon, Bancholeomon]);
-    Murasamemon.addEvolucao(Habakirimon);
-    Kaiserleomon.addEvolucao(Ancientsphinxmon);
-    Aegiochusmon.addEvolucao(Jupitermon);
-    Aegiochusmon_Blue.addEvolucao(Jupitermon);
-    Aegiochusmon_Green.addEvolucao(Jupitermon);
-    Aegiochusmon_Holy.addEvolucao(Jupitermon);
-    Aegiochusmon_Dark.addEvolucao(Jupitermon);
-    Lucemon_Falldown_Mode.addEvolucao(Lucemon_Satan_Mode);
-
-    Saberleomon.addSlideEvolucao(Dinotigermon);
-
-    Saberleomon.addEvolucao(Tlalocmon);
-    Bancholeomon.addMultiEvolucao([Bancholeomon_Burst_Mode, Chaosmon, Chaosmon_Valdur_Arm]);
-    Jupitermon.addEvolucao(Jupitermon_Wrath_Mode);
-
-    Chaosmon.addEvolucao(Ultimate_Chaosmon);
-    Chaosmon_Valdur_Arm.addEvolucao(Ultimate_Chaosmon);
-    */
+    
 
     Start_list();
     Insert_Tab();
     Save_event()
     Load_Event()
 
+    document.body.style.zoom = "50%";
 
 }
 
@@ -219,37 +88,97 @@ function Load_Event() {
 
         if (arquivo) {
             //console.log('Arquivo selecionado:', arquivo.name);
-            Load_JSON(arquivo);
+            if (arquivo.name.includes(".json")){
+                Load_JSON(arquivo);
+            } else {
+                alert("O arquivo não é json");
+            }
+            
         }
+        arquivoInput.value = "";
     });
 }
 
 async function Load_JSON(arquivo) {
     let conteudo = await arquivo.text();
-    let dados = JSON.parse(conteudo);
+    let parse_funciona = true;
+    var dados;
 
-    //console.log(dados);
-
-    for (let i = 0; i < dados.length; i++) {
-        var New_Digimon = new Digimon(dados[i].nome, dados[i].nivel);
-        New_Digimon.setImagem(dados[i].imagem);
-        for (let j = 0; j < dados[i].pre_evolucoes[0].length; j++) {
-            New_Digimon.addPreEvolucao(find_digimon(dados[i].pre_evolucoes[0][j]));
+    try {
+        dados = JSON.parse(conteudo);
+    }
+    catch (erro) {
+        if (erro.message.includes("not valid JSON")) {
+            console.log("O arquivo não contéum JSON válido.")
+            alert("O arquivo não contém um JSON válido.");
+            parse_funciona = false;
         }
     }
+    if (parse_funciona) {
+        if (validarEstrutura(dados)) {
+            //console.log(dados);
 
-    for (let i = 0; i < dados.length; i++) {
-        var digimon_atual = find_digimon(dados[i].nome);
-        for (let j = 0; j < dados[i].slide_evolucoes[0].length; j++) {
-            var Slide_evo = find_digimon(dados[i].slide_evolucoes[0][j])
-            if (!digimon_atual.getSlideEvolucoesIntern().includes(Slide_evo)) {
-                digimon_atual.addSlideEvolucao(Slide_evo);
-            }            
+            Deletar_Todos();
+
+            for (let i = 0; i < dados.length; i++) {
+                var New_Digimon = new Digimon(dados[i].nome, dados[i].nivel);
+                New_Digimon.setImagem(dados[i].imagem);
+                for (let j = 0; j < dados[i].pre_evolucoes[0].length; j++) {
+                    New_Digimon.addPreEvolucao(find_digimon(dados[i].pre_evolucoes[0][j]));
+                }
+            }
+
+            for (let i = 0; i < dados.length; i++) {
+                var digimon_atual = find_digimon(dados[i].nome);
+                for (let j = 0; j < dados[i].slide_evolucoes[0].length; j++) {
+                    var Slide_evo = find_digimon(dados[i].slide_evolucoes[0][j])
+                    if (!digimon_atual.getSlideEvolucoesIntern().includes(Slide_evo)) {
+                        digimon_atual.addSlideEvolucao(Slide_evo);
+                    }
+                }
+            }
+            Start_list_restart()
+        }
+        else {
+            alert("O arquivo json não é compatível");
         }
     }
+    
+}
 
+function validarEstrutura(dados) {
+    if (!Array.isArray(dados)) {
+        return false;
+    }
 
-    Start_list_restart()
+    for (const item of dados) {
+
+        // Verifica se todas as propriedades existem
+        if (
+            !("nome" in item) ||
+            !("imagem" in item) ||
+            !("nivel" in item) ||            
+            !("pre_evolucoes" in item) ||
+            !("evolucoes" in item) ||
+            !("slide_evolucoes" in item)
+        ) {
+            return false;
+        }
+
+        // Verifica os tipos
+        if (
+            typeof item.nome !== "string" ||
+            typeof item.imagem !== "string" ||
+            typeof item.nivel !== "string" ||            
+            !Array.isArray(item.pre_evolucoes) ||
+            !Array.isArray(item.evolucoes) ||
+            !Array.isArray(item.slide_evolucoes)
+        ) {
+            return false;
+        }        
+    }
+
+    return true;
 }
 
 function Start_list() {
@@ -841,6 +770,15 @@ function Deletar_Digimon(Digi) {
 
 }
 
+function Deletar_Todos(){
+    var Digimon_Instancias = [...Digimon.instancias];
+    for(let i = 0; i < Digimon_Instancias.length; i++){
+        Digimon_Instancias[i].delete();        
+    }
+    Digimon_Instancias = [];
+    Start_list_restart();
+}
+
 function exibirDigimonTodos() {
     exibirDigimons(Digimon.instancias_lv1, "lv1");
     exibirDigimons(Digimon.instancias_lv2, "lv2");
@@ -855,6 +793,7 @@ function exibirDigimonTodos() {
 function criarSetasTodos() {
     window.scrollTo(0, 0);
     window.scroll(0, 0);
+    document.body.style.zoom = "100%";
     criarSetas(Digimon.instancias_lv1, Digimon.instancias_lv2);
     criarSetas(Digimon.instancias_lv2, Digimon.instancias_lv3);
     criarSetas(Digimon.instancias_lv3, Digimon.instancias_lv4);
@@ -863,6 +802,7 @@ function criarSetasTodos() {
     criarSetas(Digimon.instancias_lv6, Digimon.instancias_lv7);
     criarSetas(Digimon.instancias_lv7, Digimon.instancias_lv8);
     criarSetas(Digimon.instancias_lv8, null);
+    document.body.style.zoom = "50%";
     window.scrollTo(0, 0);
     window.scroll(0, 0);
 
@@ -894,11 +834,27 @@ function criarSetas(instancias, instancias_proximo_nivel) {
             const coordenadas_evo = elemento_evo.getBoundingClientRect();
             //console.log(`EVO - X: ${coordenadas_evo.left}, Y: ${coordenadas_evo.top}`);
 
-            let comprimento = distancia(coordenadas.left + 625, coordenadas.top + 110, coordenadas_evo.left, coordenadas_evo.top + 110);
-            //console.log("Comprimento da seta: " + comprimento);
+            // centro da lateral direita do Digimon atual
+            const origemX = coordenadas.left + coordenadas.width;
+            const origemY = coordenadas.top + (coordenadas.height / 2);
 
-            let graus = angulo(coordenadas.left + 625, coordenadas.top + 110, coordenadas_evo.left, coordenadas_evo.top + 110);
-            //console.log("Ângulo da seta: " + graus);
+            // centro da lateral esquerda da evolução
+            const destinoX = coordenadas_evo.left;
+            const destinoY = coordenadas_evo.top + (coordenadas_evo.height / 2);
+
+            let comprimento = distancia(
+                origemX,
+                origemY,
+                destinoX,
+                destinoY
+            );
+
+            let graus = angulo(
+                origemX,
+                origemY,
+                destinoX,
+                destinoY
+            );
 
 
 
@@ -907,8 +863,8 @@ function criarSetas(instancias, instancias_proximo_nivel) {
 
             let mensagem = `<seta id = "${seta_nome_formatado}" style = "
             width: ${comprimento}px;
-            left: ${coordenadas.left + 625}px; 
-            top: ${coordenadas.top + 110}px;
+            left: ${origemX}px; 
+            top: ${origemY}px;
             transform: rotate(${graus}deg);
             ;
             " >                 
@@ -937,15 +893,33 @@ function criarSetas(instancias, instancias_proximo_nivel) {
                     const coordenadas_evo = elemento_evo.getBoundingClientRect();
                     //console.log(`EVO - X: ${coordenadas_evo.left}, Y: ${coordenadas_evo.top}`);
 
-                    let comprimento = distancia(coordenadas.left + 312, coordenadas.top + 222, coordenadas_evo.left + 312, coordenadas_evo.top - 6);
+                    // centro inferior do Digimon atual
+                    const origemX = coordenadas.left + (coordenadas.width / 2);
+                    const origemY = coordenadas.top + coordenadas.height;
 
-                    let graus = angulo(coordenadas.left + 312, coordenadas.top + 222, coordenadas_evo.left + 312, coordenadas_evo.top - 6);
+                    // centro superior do slide
+                    const destinoX = coordenadas_evo.left + (coordenadas_evo.width / 2);
+                    const destinoY = coordenadas_evo.top;
+
+                    let comprimento = distancia(
+                        origemX,
+                        origemY,
+                        destinoX,
+                        destinoY
+                    );
+
+                    let graus = angulo(
+                        origemX,
+                        origemY,
+                        destinoX,
+                        destinoY
+                    );
 
 
                     let mensagem = `<seta id = "${seta_nome_formatado}" style = "
                     width: ${comprimento}px;
-                    left: ${coordenadas.left + 312}px; 
-                    top: ${coordenadas.top + 226}px;
+                    left: ${origemX}px; 
+                    top: ${origemY}px;
                     transform: rotate(${graus}deg);
                     ;
                     " >              

@@ -3,6 +3,8 @@
   src: url('fonts/calculator.ttf') format('truetype');
 }
 
+
+
 .digimon_template{    
     user-select: none; 
     display: flex;
